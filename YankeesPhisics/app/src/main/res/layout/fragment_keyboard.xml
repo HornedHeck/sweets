@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.hornedheck.yankeesphisics.presentation.MainViewModel" />
+    </data>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('7')}"
+            android:text="7" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('8')}"
+            android:text="8" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('9')}"
+            android:text="9" />
+
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('4')}"
+            android:text="4" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('5')}"
+            android:text="5" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('6')}"
+            android:text="6" />
+
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('1')}"
+            android:text="1" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('2')}"
+            android:text="2" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('3')}"
+            android:text="3" />
+
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.delete()}"
+            android:text="DEL" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.numeric('0')}"
+            android:text="0" />
+
+        <Button
+            style="@style/KeyboardButton"
+            android:onClick="@{(v) -> viewModel.dot()}"
+            android:text="." />
+
+    </GridLayout>
+</layout>
