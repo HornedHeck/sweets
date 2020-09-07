@@ -17,6 +17,16 @@ class MainViewModel : ViewModel() {
 
     val arg = ObservableField("0")
     val res = ObservableField("0")
+    val groups = ObservableField<List<Int>>()
+    val types = ObservableField<List<Int>>()
+
+    init {
+        groups.set(
+            provider.getGroups()
+                .apply { types.set(provider.getConversions(first()).map(Conversion::title)) }
+                .map(ConversionGroup::title)
+        )
+    }
 
     init {
         provider.getConversions(group).let {
@@ -27,7 +37,7 @@ class MainViewModel : ViewModel() {
 
     private fun convert() {
         val arg = arg.get()?.toFloat() ?: 0f
-        res.set((arg / from.coefficient * to.coefficient).toString())
+        res.set((arg * from.coefficient / to.coefficient).toString())
     }
 
     private fun clear() {
@@ -64,6 +74,7 @@ class MainViewModel : ViewModel() {
         } else {
             arg.set(arg.get()!! + text)
         }
+        convert()
     }
 
     fun swapValues() {
@@ -75,5 +86,28 @@ class MainViewModel : ViewModel() {
         from = to.also { to = from }
         convert()
     }
+
+    fun groupSelected(number: Int) {
+        group = provider.getGroups()[number]
+        provider.getConversions(group)
+            .also { types.set(it.map(Conversion::title)) }
+            .first()
+            .let {
+                from = it
+                to = it
+                convert()
+            }
+    }
+
+    fun fromSelected(number: Int) {
+        from = provider.getConversions(group)[number]
+        convert()
+    }
+
+    fun toSelected(number: Int) {
+        to = provider.getConversions(group)[number]
+        convert()
+    }
+
 
 }

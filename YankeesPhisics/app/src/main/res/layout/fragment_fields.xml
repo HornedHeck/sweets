@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.hornedheck.yankeesphisics.presentation.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:items="@{viewModel.groups}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:on_selected="@{(pos) -> viewModel.groupSelected(pos)}" />
+
+        <Spinner
+            android:id="@+id/spFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:items="@{viewModel.types}"
+            app:layout_constraintBottom_toBottomOf="@+id/tvArg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvArg"
+            app:on_selected="@{(pos) -> viewModel.fromSelected(pos)}" />
+
+        <TextView
+            android:id="@+id/tvArg"
+            style="@style/Field"
+            android:text="@{viewModel.arg}"
+            app:layout_constraintEnd_toStartOf="@+id/spFrom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spGroup" />
+
+        <Spinner
+            android:id="@+id/spTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:items="@{viewModel.types}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvArg"
+            app:on_selected="@{(pos) -> viewModel.toSelected(pos)}" />
+
+        <TextView
+            android:id="@+id/tvRes"
+            style="@style/Field"
+            android:text="@{viewModel.res}"
+            app:layout_constraintEnd_toStartOf="@+id/spTo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvArg" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
