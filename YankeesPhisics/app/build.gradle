@@ -3,7 +3,19 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply from: '../git.gradle'
+def tag = getLastTag()
+def patch = getPatchByTag(tag)
+
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/hornedheck/StudioProjects/sweets/keys.jks')
+            storePassword '110101'
+            keyAlias 'yankee'
+            keyPassword '110101'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -16,10 +28,11 @@ android {
         minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "${tag}.${patch}"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {

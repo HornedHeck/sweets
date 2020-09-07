@@ -13,7 +13,7 @@ def getLastTag(){
         commandLine 'git', 'describe'
         standardOutput = tagsOutput
     }
-    return tagsOutput.toString().split('\n').last()
+    return tagsOutput.toString().substring(0 , 3)
 }
 
 ext {
