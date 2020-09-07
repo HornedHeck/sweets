@@ -1,0 +1,22 @@
+def getPatchByTag(String tag) {
+    def diffOutput = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'log', '--oneline', 'HEAD', "^${tag}"
+        standardOutput = diffOutput
+    }
+    return diffOutput.toString().split('\n').length.toString()
+}
+
+def getLastTag(){
+    def tagsOutput = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = tagsOutput
+    }
+    return tagsOutput.toString().split('\n').last()
+}
+
+ext {
+    getPatchByTag = this.&getPatchByTag
+    getLastTag = this.&getLastTag
+}
