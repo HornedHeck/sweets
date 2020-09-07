@@ -29,6 +29,16 @@ android {
         }
     }
 
+    flavorDimensions "version"
+    productFlavors{
+        base{
+
+        }
+        premium{
+
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

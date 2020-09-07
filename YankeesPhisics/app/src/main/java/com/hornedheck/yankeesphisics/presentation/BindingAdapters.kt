@@ -32,3 +32,8 @@ fun Spinner.items(items: List<Int>) {
         items.map(context::getString)
     )
 }
+
+@BindingAdapter("selection")
+fun Spinner.selection(pos: Int) {
+    setSelection(pos, false)
+}

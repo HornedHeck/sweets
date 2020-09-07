@@ -1,6 +1,7 @@
 package com.hornedheck.yankeesphisics.presentation
 
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import com.hornedheck.yankeesphisics.data.Conversion
 import com.hornedheck.yankeesphisics.data.ConversionGroup
@@ -13,7 +14,9 @@ class MainViewModel : ViewModel() {
 
     private var group = ConversionGroup.DISTANCE
     private var from: Conversion
+    val fromSelection = ObservableInt(0)
     private var to: Conversion
+    val toSelection = ObservableInt(0)
 
     val arg = ObservableField("0")
     val res = ObservableField("0")
@@ -84,7 +87,10 @@ class MainViewModel : ViewModel() {
 
     fun swapUnits() {
         from = to.also { to = from }
-        convert()
+        fromSelection.get().let {
+            fromSelection.set(toSelection.get())
+            toSelection.set(it)
+        }
     }
 
     fun groupSelected(number: Int) {
@@ -101,11 +107,13 @@ class MainViewModel : ViewModel() {
 
     fun fromSelected(number: Int) {
         from = provider.getConversions(group)[number]
+        fromSelection.set(number)
         convert()
     }
 
     fun toSelected(number: Int) {
         to = provider.getConversions(group)[number]
+        toSelection.set(number)
         convert()
     }
 
