@@ -2,7 +2,9 @@ package com.hornedheck.yankeesphisics.presentation
 
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.hornedheck.yankeesphisics.SingleLiveEvent
 import com.hornedheck.yankeesphisics.data.Conversion
 import com.hornedheck.yankeesphisics.data.ConversionGroup
 import com.hornedheck.yankeesphisics.data.ConversionProvider
@@ -22,6 +24,9 @@ class MainViewModel : ViewModel() {
     val res = ObservableField("0")
     val groups = ObservableField<List<Int>>()
     val types = ObservableField<List<Int>>()
+
+    private val _clipboardData = SingleLiveEvent<String>()
+    val clipboardData: LiveData<String> = _clipboardData
 
     init {
         groups.set(
@@ -111,11 +116,19 @@ class MainViewModel : ViewModel() {
         convert()
     }
 
+    fun fromCopy() {
+        _clipboardData.postValue(arg.get())
+    }
+
     fun toSelected(number: Int) {
         to = provider.getConversions(group)[number]
         toSelection.set(number)
         convert()
     }
 
+
+    fun toCopy() {
+        _clipboardData.postValue(res.get())
+    }
 
 }

@@ -30,20 +30,22 @@
             android:id="@+id/spFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:spinnerMode="dialog"
             app:items="@{viewModel.types}"
-            app:selection="@{viewModel.fromSelection}"
             app:layout_constraintBottom_toBottomOf="@+id/tvArg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvArg"
-            app:on_selected="@{(pos) -> viewModel.fromSelected(pos)}" />
+            app:on_selected="@{(pos) -> viewModel.fromSelected(pos)}"
+            app:selection="@{viewModel.fromSelection}" />
 
         <TextView
             android:id="@+id/tvArg"
             style="@style/Field"
             android:text="@{viewModel.arg}"
+            android:layout_marginStart="16dp"
             app:layout_constraintEnd_toStartOf="@+id/spFrom"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivCopyFrom"
             app:layout_constraintTop_toBottomOf="@+id/spGroup" />
 
         <Spinner
@@ -53,27 +55,30 @@
             android:layout_marginTop="6dp"
             android:spinnerMode="dialog"
             app:items="@{viewModel.types}"
-            app:selection="@{viewModel.toSelection}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvRes"
-            app:on_selected="@{(pos) -> viewModel.toSelected(pos)}" />
+            app:on_selected="@{(pos) -> viewModel.toSelected(pos)}"
+            app:selection="@{viewModel.toSelection}" />
 
         <TextView
             android:id="@+id/tvRes"
             style="@style/Field"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@{viewModel.res}"
             app:layout_constraintEnd_toStartOf="@+id/spTo"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivCopyTo"
             app:layout_constraintTop_toBottomOf="@+id/ivSwapValues" />
 
         <ImageView
             android:id="@+id/ivSwapValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:paddingVertical="16dp"
             android:onClick="@{(v) -> viewModel.swapValues()}"
+
             app:layout_constraintEnd_toStartOf="@+id/spFrom"
             app:layout_constraintStart_toStartOf="@+id/tvArg"
             app:layout_constraintTop_toBottomOf="@+id/tvArg"
@@ -91,6 +96,32 @@
             app:layout_constraintStart_toStartOf="@+id/spFrom"
             app:layout_constraintTop_toTopOf="@+id/ivSwapValues"
             app:srcCompat="@drawable/ic_swap"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/ivCopyFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="@{(v) -> viewModel.fromCopy()}"
+            app:layout_constraintBottom_toBottomOf="@+id/tvArg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvArg"
+            app:srcCompat="@drawable/ic_copy"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/ivCopyTo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="@{(v) -> viewModel.toCopy()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvRes"
+            app:srcCompat="@drawable/ic_copy"
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,9 +20,12 @@
     <style name="Field">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">14dp</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">20sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:requiresFadingEdge">horizontal</item>
     </style>
 
 </resources>

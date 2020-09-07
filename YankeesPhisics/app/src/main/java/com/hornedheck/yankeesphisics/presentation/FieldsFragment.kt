@@ -1,17 +1,18 @@
 package com.hornedheck.yankeesphisics.presentation
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.databinding.BindingAdapter
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.observe
 import com.hornedheck.yankeesphisics.R
-import com.hornedheck.yankeesphisics.data.ConversionGroup
 import com.hornedheck.yankeesphisics.databinding.FragmentFieldsBinding
 
 class FieldsFragment : Fragment() {
@@ -32,4 +33,16 @@ class FieldsFragment : Fragment() {
         binding.viewModel = viewModel
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.clipboardData.observe(requireActivity()) {
+            ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+                ?.setPrimaryClip(ClipData.newPlainText("", it))
+
+            Toast.makeText(requireContext() , it , Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }
