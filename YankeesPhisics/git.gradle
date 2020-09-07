@@ -1,22 +1,41 @@
-def getPatchByTag(String tag) {
+def getPatch() {
     def diffOutput = new ByteArrayOutputStream()
     exec {
-        commandLine 'git', 'log', '--oneline', 'HEAD', "^${tag}"
+        commandLine 'git', 'describe'
         standardOutput = diffOutput
     }
-    return diffOutput.toString().split('\n').length.toString()
+    def res = diffOutput.toString()
+    if (res.contains('-')) {
+        return res.split('-')[1]
+    } else {
+        return '0'
+    }
 }
 
-def getLastTag(){
+def getLastTag() {
     def tagsOutput = new ByteArrayOutputStream()
     exec {
         commandLine 'git', 'describe'
         standardOutput = tagsOutput
     }
-    return tagsOutput.toString().substring(0 , 3)
+    def res = tagsOutput.toString()
+    if (res.contains('-')) {
+        return res.split('-').first()
+    } else {
+        return '0.0'
+    }
+}
+
+static def generateVersionCode(String tag, String patch) {
+    def dot = tag.indexOf('.')
+    def major = tag.substring(0, dot).toInteger()
+    def minor = tag.substring(dot + 1).toInteger()
+    def res = (major*10 + minor.toInteger())*100 + patch.toInteger()
+    return res
 }
 
 ext {
-    getPatchByTag = this.&getPatchByTag
+    getPatch = this.&getPatch
     getLastTag = this.&getLastTag
+    generateVersionCode = this.&generateVersionCode
 }

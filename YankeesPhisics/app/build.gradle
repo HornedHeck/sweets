@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 apply from: '../git.gradle'
 def tag = getLastTag()
-def patch = getPatchByTag(tag)
+def patch = getPatch()
 
 android {
     signingConfigs {
@@ -27,7 +27,7 @@ android {
         applicationId "com.hornedheck.yankeesphisics"
         minSdkVersion 22
         targetSdkVersion 30
-        versionCode 1
+        versionCode generateVersionCode(tag , patch)
         versionName "${tag}.${patch}"
         multiDexEnabled true
 
