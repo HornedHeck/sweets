@@ -1,4 +1,4 @@
+include ':app'
 include ':data'
 include ':entities'
-include ':app'
 rootProject.name = "RESTful Timer"

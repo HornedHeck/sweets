@@ -3,16 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ListFragment">
+    tools:context=".presentation.list.ListFragment">
 
     <TextView
+        android:id="@+id/tvNoItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textAlignment="center"/>
+        android:gravity="center"
+        android:text="@string/error_empty" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvItems"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:background="#eee"
+            android:layout_height="match_parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_timer" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>
