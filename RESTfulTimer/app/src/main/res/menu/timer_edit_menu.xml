@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/timer_submit"
+        android:icon="@drawable/ic_submit"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/timer_decline"
+        android:icon="@drawable/ic_decline"
+        android:title=""
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+</menu>

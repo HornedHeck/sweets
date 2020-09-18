@@ -10,11 +10,7 @@
             type="com.hornedheck.restfultimer.presentation.timers.TimerModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/white">
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/Layout.ListItem">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"

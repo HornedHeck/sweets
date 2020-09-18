@@ -5,6 +5,8 @@ import com.hornedheck.restfultimer.data.LocalApi
 import com.hornedheck.restfultimer.entities.Response
 import com.hornedheck.restfultimer.entities.Response.Companion.Success
 import com.hornedheck.restfultimer.entities.Timer
+import com.hornedheck.restfultimer.entities.TimerStep
+import com.hornedheck.restfultimer.framework.models.StepType as EStepType
 
 class MockLocal : LocalApi {
 
@@ -23,6 +25,13 @@ class MockLocal : LocalApi {
         )
     }
 
+    private val steps = listOf(
+        TimerStep(1, "Prepare", null, 10, EStepType.PREPARE.name),
+        TimerStep(1, "Work", null, 40, EStepType.WORK.name),
+        TimerStep(1, "Repeats", null, 2, EStepType.REPEAT.name),
+        TimerStep(1, "Sets", null, 1, EStepType.SETS.name),
+    )
+
     override suspend fun updateTimer(timer: Timer): Response<Unit> {
         return Success
     }
@@ -36,9 +45,9 @@ class MockLocal : LocalApi {
             Timer(
                 id,
                 "Name of $id",
-                Color.GREEN,
+                Color.WHITE,
                 100,
-                listOf()
+                steps
             )
         )
     }

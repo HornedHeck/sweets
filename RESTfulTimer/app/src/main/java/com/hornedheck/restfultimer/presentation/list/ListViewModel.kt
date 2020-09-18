@@ -15,7 +15,7 @@ abstract class ListViewModel<T>(protected val repository: Repository) : BaseView
         CoroutineScope(Dispatchers.Main).launch {
             isLoading.setValue(true)
             val response = withContext(Dispatchers.IO) {
-                delay(2000)
+                delay(100)
                 loadData()
             }
             isLoading.setValue(false)

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.MainActivity">
 
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment"
         android:name="com.hornedheck.restfultimer.presentation.timers.TimersFragment"
         android:layout_width="0dp"

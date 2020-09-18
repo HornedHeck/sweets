@@ -1,11 +1,19 @@
 package com.hornedheck.restfultimer.presentation.list
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.view.*
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +29,8 @@ abstract class ListFragment<T> : Fragment() {
 
 
     protected abstract val viewModel: ListViewModel<T>
+
+    protected var menu: Menu? = null
 
     @get: LayoutRes
     protected open val layoutRes: Int = R.layout.fragment_list
@@ -82,4 +92,44 @@ abstract class ListFragment<T> : Fragment() {
             )
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        this.menu = menu
+    }
+
+    protected fun configureToolbar(@ColorInt color: Int, title: String) {
+        val textColor = getTextColor(color)
+        (requireActivity() as AppCompatActivity)
+            .supportActionBar?.apply {
+                setBackgroundDrawable(
+                    ColorDrawable(
+                        color
+                    )
+                )
+            }
+        requireActivity().title = SpannableString(title).apply {
+            setSpan(
+                ForegroundColorSpan(textColor),
+                0,
+                length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        val textColorList = ColorStateList.valueOf(textColor)
+        menu?.children?.toList()
+            ?.forEach {
+                MenuItemCompat.setIconTintList(
+                    it,
+                    textColorList
+                )
+            }
+    }
+
+    private fun getTextColor(src: Int): Int {
+        return if (listOf(Color.red(src), Color.green(src), Color.blue(src)).any { it < 127 }) {
+            Color.WHITE
+        } else {
+            Color.BLACK
+        }
+    }
 }
