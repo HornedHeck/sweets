@@ -5,7 +5,7 @@ import com.hornedheck.restfultimer.entities.Timer
 
 interface LocalApi {
 
-    suspend fun createTimer(timer: Timer): Response<Unit>
+    suspend fun createTimer(): Response<Unit>
 
     suspend fun getTimers(): Response<List<Timer>>
 

@@ -10,19 +10,28 @@ import com.hornedheck.restfultimer.framework.models.StepType as EStepType
 
 class MockLocal : LocalApi {
 
-    override suspend fun createTimer(timer: Timer): Response<Unit> {
+    private val timers = mutableListOf(
+        Timer(0, "Name 1", Color.RED, 10),
+        Timer(1, "Name 2", Color.GREEN, 20),
+        Timer(2, "Name 3", Color.BLUE, 511),
+        Timer(3, "Name 4", Color.WHITE, 12541),
+    )
+
+    override suspend fun createTimer(): Response<Unit> {
+        timers.add(
+            Timer(
+                timers.size,
+                "Name of ${timers.size}",
+                Color.WHITE,
+                100,
+                steps
+            )
+        )
         return Success
     }
 
     override suspend fun getTimers(): Response<List<Timer>> {
-        return Response(
-            listOf(
-                Timer(0, "Name 1", Color.RED, 10),
-                Timer(1, "Name 2", Color.GREEN, 20),
-                Timer(2, "Name 3", Color.BLUE, 511),
-                Timer(3, "Name 4", Color.WHITE, 12541),
-            )
-        )
+        return Response(timers)
     }
 
     private val steps = listOf(

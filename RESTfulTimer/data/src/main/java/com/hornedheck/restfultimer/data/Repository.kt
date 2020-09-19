@@ -4,7 +4,7 @@ import com.hornedheck.restfultimer.entities.Timer
 
 class Repository(private val local: LocalApi) {
 
-    suspend fun createTimer(timer: Timer) = local.createTimer(timer)
+    suspend fun createTimer() = local.createTimer()
 
     suspend fun getTimers() = local.getTimers()
 

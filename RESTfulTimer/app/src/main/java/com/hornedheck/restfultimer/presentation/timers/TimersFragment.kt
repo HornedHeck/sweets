@@ -6,11 +6,14 @@ import com.hornedheck.restfultimer.R
 import com.hornedheck.restfultimer.entities.Timer
 import com.hornedheck.restfultimer.presentation.list.ListFragment
 import com.hornedheck.restfultimer.presentation.timer.TimerFragment
+import kotlinx.android.synthetic.main.fragment_timers.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TimersFragment : ListFragment<Timer>() {
 
     override val viewModel by viewModel<TimersViewModel>()
+
+    override val layoutRes = R.layout.fragment_timers
 
     private val adapter = TimersAdapter()
 
@@ -21,6 +24,11 @@ class TimersFragment : ListFragment<Timer>() {
 
     override fun submitData(data: List<Timer>) {
         adapter.items = data
+    }
+
+    override fun initUI() {
+        super.initUI()
+        fabAdd.setOnClickListener { viewModel.addClicked() }
     }
 
     override fun initObservers() {

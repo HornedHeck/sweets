@@ -12,6 +12,17 @@ class TimersViewModel(repository: Repository) : ListViewModel<Timer>(repository)
 
     override suspend fun loadData() = repository.getTimers()
 
+    fun addClicked() {
+        CoroutineScope(Dispatchers.Main).launch {
+            val createRes = withContext(Dispatchers.IO) {
+                repository.createTimer()
+            }
+            if (createRes.isSuccessful) {
+                updateData()
+            }
+        }
+    }
+
     fun deleteClicked(id: Int, data: List<Timer>) {
         CoroutineScope(Dispatchers.Main).launch {
             val response = withContext(Dispatchers.IO) {
