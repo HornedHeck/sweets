@@ -20,7 +20,7 @@ class MockLocal : LocalApi {
     override suspend fun createTimer(): Response<Unit> {
         timers.add(
             Timer(
-                timers.size,
+                timers.size.toLong(),
                 "Name of ${timers.size}",
                 Color.WHITE,
                 100,
@@ -45,11 +45,11 @@ class MockLocal : LocalApi {
         return Success
     }
 
-    override suspend fun deleteTimer(id: Int): Response<Unit> {
+    override suspend fun deleteTimer(id: Long): Response<Unit> {
         return Success
     }
 
-    override suspend fun getTimer(id: Int): Response<Timer> {
+    override suspend fun getTimer(id: Long): Response<Timer> {
         return Response(
             Timer(
                 id,

@@ -23,7 +23,7 @@ class TimersViewModel(repository: Repository) : ListViewModel<Timer>(repository)
         }
     }
 
-    fun deleteClicked(id: Int, data: List<Timer>) {
+    fun deleteClicked(id: Long, data: List<Timer>) {
         CoroutineScope(Dispatchers.Main).launch {
             val response = withContext(Dispatchers.IO) {
                 repository.deleteTimer(id)

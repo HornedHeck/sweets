@@ -1,6 +1,6 @@
 package com.hornedheck.restfultimer.entities
 
-data class Response<T>(
+data class Response<out T>(
     val data: T?,
     val isSuccessful: Boolean = data != null
 ) {
@@ -15,7 +15,19 @@ data class Response<T>(
 
     companion object {
         val Success = Response(Unit, true)
-        val Fail = Response<Any>(null, false)
+        val Fail = Response(null, false)
     }
+}
 
+fun <T> handle(block: () -> T) = try {
+    Response(block(), true)
+} catch (e: Exception) {
+    Response(null, false)
+}
+
+fun handleUnit(block: () -> Unit) = try {
+    block()
+    Response.Success
+} catch (e: Exception) {
+    Response.Fail
 }

@@ -19,14 +19,14 @@ import com.hornedheck.restfultimer.utils.SingleLiveEvent
 
 class TimersAdapter : BaseAdapter<Timer, TimersViewHolder>() {
 
-    private val _deleteClicked = SingleLiveEvent<Int>()
-    val deleteClicked: LiveData<Int> = _deleteClicked
+    private val _deleteClicked = SingleLiveEvent<Long>()
+    val deleteClicked: LiveData<Long> = _deleteClicked
 
-    private val _editClicked = SingleLiveEvent<Int>()
-    val editClicked: LiveData<Int> = _editClicked
+    private val _editClicked = SingleLiveEvent<Long>()
+    val editClicked: LiveData<Long> = _editClicked
 
-    private val _runClicked = SingleLiveEvent<Int>()
-    val runClicked: LiveData<Int> = _runClicked
+    private val _runClicked = SingleLiveEvent<Long>()
+    val runClicked: LiveData<Long> = _runClicked
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimersViewHolder {
         return TimersViewHolder(

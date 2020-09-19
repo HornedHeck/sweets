@@ -10,8 +10,8 @@ class Repository(private val local: LocalApi) {
 
     suspend fun updateTimer(timer: Timer) = local.updateTimer(timer)
 
-    suspend fun deleteTimer(id: Int) = local.deleteTimer(id)
+    suspend fun deleteTimer(id: Long) = local.deleteTimer(id)
 
-    suspend fun getTimer(id: Int) = local.getTimer(id)
+    suspend fun getTimer(id: Long) = local.getTimer(id)
 
 }

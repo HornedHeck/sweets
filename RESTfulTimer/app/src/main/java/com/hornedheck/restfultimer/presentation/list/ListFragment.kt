@@ -30,7 +30,7 @@ abstract class ListFragment<T> : Fragment() {
 
     protected abstract val viewModel: ListViewModel<T>
 
-    protected var menu: Menu? = null
+    private var menu: Menu? = null
 
     @get: LayoutRes
     protected open val layoutRes: Int = R.layout.fragment_list
@@ -63,7 +63,7 @@ abstract class ListFragment<T> : Fragment() {
         viewModel.items.observe(this) { isVisible, data ->
             recyclerView.visible = isVisible
             errorText.visible = !isVisible
-            submitData(data!!)
+            data?.let(this::submitData)
             swipeRefreshLayout.isRefreshing = false
         }
         viewModel.isError.observe(this) {

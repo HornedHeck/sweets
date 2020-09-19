@@ -11,7 +11,7 @@ import com.hornedheck.restfultimer.utils.observe
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class TimerFragment(id: Int) : ListFragment<TimerStep>() {
+class TimerFragment(id: Long) : ListFragment<TimerStep>() {
 
     override val viewModel: TimerViewModel by viewModel { parametersOf(id) }
 

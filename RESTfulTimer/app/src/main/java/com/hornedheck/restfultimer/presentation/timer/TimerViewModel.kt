@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TimerViewModel(private val id: Int, repository: Repository) :
+class TimerViewModel(private val id: Long, repository: Repository) :
     ListViewModel<TimerStep>(repository) {
 
     private lateinit var timer: Timer

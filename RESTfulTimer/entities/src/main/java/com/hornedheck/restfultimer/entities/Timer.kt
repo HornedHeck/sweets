@@ -1,7 +1,7 @@
 package com.hornedheck.restfultimer.entities
 
 class Timer(
-    val id: Int,
+    val id: Long,
     val name: String,
     val color: Int,
     val duration: Int,

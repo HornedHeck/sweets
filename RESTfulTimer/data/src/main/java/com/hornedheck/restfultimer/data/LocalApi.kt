@@ -11,8 +11,8 @@ interface LocalApi {
 
     suspend fun updateTimer(timer: Timer): Response<Unit>
 
-    suspend fun deleteTimer(id: Int): Response<Unit>
+    suspend fun deleteTimer(id: Long): Response<Unit>
 
-    suspend fun getTimer(id: Int) : Response<Timer>
+    suspend fun getTimer(id: Long) : Response<Timer>
 
 }
