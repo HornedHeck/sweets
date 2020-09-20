@@ -19,7 +19,7 @@ data class Timer(
         timer.name,
         timer.color,
         timer.duration,
-        steps.map(TimerStep::convert)
+        steps.map(TimerStep::convert).toMutableList()
     )
 
 

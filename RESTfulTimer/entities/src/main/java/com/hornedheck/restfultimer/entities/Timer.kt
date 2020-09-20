@@ -2,8 +2,8 @@ package com.hornedheck.restfultimer.entities
 
 class Timer(
     val id: Long,
-    val name: String,
-    val color: Int,
-    val duration: Int,
-    val steps: List<TimerStep>? = null
+    var name: String,
+    var color: Int,
+    var duration: Int,
+    val steps: MutableList<TimerStep>? = null
 )

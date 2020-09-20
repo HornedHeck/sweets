@@ -15,6 +15,12 @@ interface TimerDao {
         insertTimerSteps(timer.steps)
     }
 
+    @Transaction
+    fun updateTimer(timer: Timer) {
+        updateTimer(timer.timer)
+        timer.steps.forEach(this::updateTimerStep)
+    }
+
     @Insert
     fun insertTimer(timer: TimerRaw): Long
 
@@ -29,7 +35,7 @@ interface TimerDao {
     @Update
     fun updateTimer(timer: TimerRaw)
 
-    @Update
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updateTimerStep(timerStep: TimerStep)
 
     @Query("DELETE FROM TimerRaw WHERE timerId = :id")

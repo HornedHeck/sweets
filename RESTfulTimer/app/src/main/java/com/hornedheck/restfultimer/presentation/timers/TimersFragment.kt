@@ -38,7 +38,7 @@ class TimersFragment : ListFragment<Timer>() {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragment, TimerFragment(it))
+                .replace(R.id.fragment, TimerFragment(it))
                 .addToBackStack(null)
                 .commit()
         }

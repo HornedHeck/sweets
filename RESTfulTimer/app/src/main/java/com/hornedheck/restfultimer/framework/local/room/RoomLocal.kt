@@ -28,8 +28,7 @@ class RoomLocal(context: Context) : LocalApi {
 
     override suspend fun updateTimer(timer: Timer) = handleUnit {
         val converted = timer.convert()
-        db.timerDao.updateTimer(converted.timer)
-        converted.steps.forEach(db.timerDao::updateTimerStep)
+        db.timerDao.updateTimer(converted)
     }
 
     override suspend fun deleteTimer(id: Long) = handleUnit {
@@ -55,7 +54,7 @@ class RoomLocal(context: Context) : LocalApi {
                 name,
                 color,
                 duration
-            ),
+            ).apply { timerId = id },
             steps?.map { it.convert(id) } ?: emptyList())
 
     private fun getDefaultTimer() = LTimer(

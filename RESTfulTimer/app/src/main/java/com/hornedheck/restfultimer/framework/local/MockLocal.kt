@@ -34,7 +34,7 @@ class MockLocal : LocalApi {
         return Response(timers)
     }
 
-    private val steps = listOf(
+    private val steps = mutableListOf(
         TimerStep(1, "Prepare", null, 10, EStepType.PREPARE.name),
         TimerStep(1, "Work", null, 40, EStepType.WORK.name),
         TimerStep(1, "Repeats", null, 2, EStepType.REPEAT.name),

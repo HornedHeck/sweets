@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/fragment_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llSubmenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/fabAdd"
+        app:layout_constraintEnd_toEndOf="@+id/fabAdd"
+        app:layout_constraintStart_toStartOf="@+id/fabAdd">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabPrepare"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_prepare" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabWork"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_work" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRest"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_rest_intermediate" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabRepeats"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_repeats" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSets"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_all_repeats" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSetsRest"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_rest_set" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabCalmDown"
+            style="@style/FAB.Submenu"
+            app:srcCompat="@drawable/ic_rest_final" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_fab" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

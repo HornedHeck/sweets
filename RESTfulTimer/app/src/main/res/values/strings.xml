@@ -13,4 +13,6 @@
     <string name="step_rest_intermediate">Rest</string>
     <string name="step_rest_set">Rest between sets</string>
     <string name="step_rest_final">Calm down</string>
+    <string name="decline">Decline</string>
+    <string name="submit">Submit</string>
 </resources>

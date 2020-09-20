@@ -4,14 +4,13 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.MenuItemCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
@@ -100,20 +99,17 @@ abstract class ListFragment<T> : Fragment() {
     protected fun configureToolbar(@ColorInt color: Int, title: String) {
         val textColor = getTextColor(color)
         (requireActivity() as AppCompatActivity)
-            .supportActionBar?.apply {
-                setBackgroundDrawable(
+            .supportActionBar?.also {
+                it.setBackgroundDrawable(
                     ColorDrawable(
                         color
                     )
                 )
             }
-        requireActivity().title = SpannableString(title).apply {
-            setSpan(
-                ForegroundColorSpan(textColor),
-                0,
-                length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).apply {
+            overflowIcon?.let { DrawableCompat.setTint(it, textColor) }
+            this.title = title
+            setTitleTextColor(textColor)
         }
         val textColorList = ColorStateList.valueOf(textColor)
         menu?.children?.toList()
