@@ -13,6 +13,8 @@ interface LocalApi {
 
     suspend fun deleteTimer(id: Long): Response<Unit>
 
-    suspend fun getTimer(id: Long) : Response<Timer>
+    suspend fun getTimer(id: Long): Response<Timer>
+
+    suspend fun clearData()
 
 }

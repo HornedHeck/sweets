@@ -60,4 +60,6 @@ class MockLocal : LocalApi {
             )
         )
     }
+
+    override suspend fun clearData() {}
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_empty">Нечего не загружено</string>
+    <string name="duration_days">%1$d д</string>
+    <string name="duration_hours">%1$d ч</string>
+    <string name="duration_minutes">%1$d м</string>
+    <string name="step_prepare">Подготовка</string>
+    <string name="step_work">Работа</string>
+    <string name="step_repeat">Повторы</string>
+    <string name="step_sets">Циклы</string>
+    <string name="step_rest_intermediate">Отдых</string>
+    <string name="step_rest_set">Отдых между циклами</string>
+    <string name="step_rest_final">Успокоиться</string>
+    <string name="decline">Отменить</string>
+    <string name="submit">Подтвердить</string>
+    <string name="messages_header">Сообщения</string>
+    <string name="settings_theme">Дневная/Ночная тема</string>
+    <string name="settings_font">Размер шрифта</string>
+    <string name="settings_lang">Язык</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="settings_clear">Очистить данные</string>
+    <string name="settings_clear_warning">Вы уверены что хотите удалить все данные?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+</resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RESTful Timer</string>
+    <string name="app_name" translatable="false">RESTful Timer</string>
 
     <string name="error_empty">No items loaded</string>
     <string name="duration_days">%1$d d</string>
@@ -17,18 +17,6 @@
     <string name="submit">Submit</string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="settings_theme">Day/Night theme</string>
     <string name="settings_font">Font size</string>
     <string name="settings_lang">Language</string>

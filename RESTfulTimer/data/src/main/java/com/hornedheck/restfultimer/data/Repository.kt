@@ -14,4 +14,6 @@ class Repository(private val local: LocalApi) {
 
     suspend fun getTimer(id: Long) = local.getTimer(id)
 
+    suspend fun clearData() = local.clearData()
+
 }

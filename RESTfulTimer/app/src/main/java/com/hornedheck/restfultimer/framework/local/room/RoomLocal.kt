@@ -72,5 +72,7 @@ class RoomLocal(context: Context) : LocalApi {
         )
     }
 
-
+    override suspend fun clearData() {
+        db.clearAllTables()
+    }
 }

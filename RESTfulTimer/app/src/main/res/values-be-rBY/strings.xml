@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="duration_days">%1$d д</string>
+    <string name="duration_hours">%1$d г</string>
+    <string name="duration_minutes">%1$d м</string>
+    <string name="step_prepare">Падрыхтоўка</string>
+    <string name="step_work">Работа</string>
+    <string name="step_repeat">Паўторы</string>
+    <string name="step_sets">Цыклы</string>
+    <string name="step_rest_intermediate">Адпачынак</string>
+    <string name="step_rest_set">Адпачынак паміж цыкламі</string>
+    <string name="step_rest_final">Супакоіцца</string>
+    <string name="decline">Адмяніць</string>
+    <string name="submit">Пацвердзіць</string>
+    <string name="messages_header">Паведамленні</string>
+    <string name="settings_theme">Дзённая / Начная тэма</string>
+    <string name="settings_font">Памер шрыфта</string>
+    <string name="settings_lang">Мова</string>
+    <string name="menu_settings">Налады</string>
+    <string name="settings_clear">Ачысціць дадзеныя</string>
+    <string name="settings_clear_warning">Вы ўпэўнены, што жадаеце выдаліць усе дадзеныя?</string>
+    <string name="yes">Так</string>
+    <string name="no">Не</string>
+    <string name="error_empty">Нічога не загружана</string>
+</resources>
