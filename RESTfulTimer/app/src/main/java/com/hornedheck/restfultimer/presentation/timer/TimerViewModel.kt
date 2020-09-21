@@ -98,10 +98,13 @@ class TimerViewModel(private val id: Long, repository: Repository) :
         timerSteps.find { it.type == StepType.CALM_DOWN.name }?.let(steps::add)
         timer.steps!!.clear()
         timer.steps!!.addAll(steps)
+        timer.steps!!.forEachIndexed { i, it -> it.position = i }
     }
 
     private fun calcDuration(): Int {
-        timer.steps ?: return 0
+
+        if (timer.steps.isNullOrEmpty()) return 0
+
         val timerSteps = timer.steps!!
         var duration = 0
         var limit = timerSteps.size
@@ -113,7 +116,6 @@ class TimerViewModel(private val id: Long, repository: Repository) :
         val steps = timerSteps.findLast { it.type == StepType.SETS.name }
         val stepRest = timerSteps.findLast { it.type == StepType.SETS_REST.name }
         val calmDown = timerSteps.findLast { it.type == StepType.CALM_DOWN.name }
-
         limit -= listOfNotNull(steps, stepRest, calmDown).size
 
         var workDuration = 0
@@ -171,6 +173,25 @@ class TimerViewModel(private val id: Long, repository: Repository) :
         timer.name = title
         isChanged.postValue(true)
         updateToolbar()
+    }
+
+    fun removeStep(pos: Int) {
+        timer.steps?.removeAt(pos)
+        if (timer.steps.isNullOrEmpty()) {
+            items.hide()
+            isError.setValue(true)
+        } else {
+            items.show(timer.steps!!)
+        }
+        isChanged.postValue(true)
+    }
+
+    fun moveStep(from: Int, to: Int) {
+        timer.steps ?: return
+        timer.steps!![from] = timer.steps!![to].also { timer.steps!![to] = timer.steps!![from] }
+        timer.steps!![from].position = from
+        timer.steps!![to].position = to
+        isChanged.postValue(true)
     }
 
 }

@@ -18,6 +18,7 @@ interface TimerDao {
     @Transaction
     fun updateTimer(timer: Timer) {
         updateTimer(timer.timer)
+        deleteTimerStepsByTimerId(timer.timer.timerId!!)
         timer.steps.forEach(this::updateTimerStep)
     }
 
@@ -27,10 +28,8 @@ interface TimerDao {
     @Insert
     fun insertTimerStep(timerStep: TimerStep)
 
-
     @Insert
     fun insertTimerSteps(timerSteps: List<TimerStep>)
-
 
     @Update
     fun updateTimer(timer: TimerRaw)
@@ -43,6 +42,9 @@ interface TimerDao {
 
     @Query("DELETE FROM TimerStep WHERE stepId = :id")
     fun deleteTimerStep(id: Long)
+
+    @Query("DELETE FROM TimerStep WHERE timerId= :id")
+    fun deleteTimerStepsByTimerId(id: Long)
 
     @Transaction
     @Query("SELECT * FROM TimerRaw")

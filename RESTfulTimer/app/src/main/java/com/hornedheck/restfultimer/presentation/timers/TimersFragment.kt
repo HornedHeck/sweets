@@ -1,10 +1,14 @@
 package com.hornedheck.restfultimer.presentation.timers
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.hornedheck.restfultimer.R
 import com.hornedheck.restfultimer.entities.Timer
 import com.hornedheck.restfultimer.presentation.list.ListFragment
+import com.hornedheck.restfultimer.presentation.settings.SettingsFragment
 import com.hornedheck.restfultimer.presentation.timer.TimerFragment
 import kotlinx.android.synthetic.main.fragment_timers.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,8 +21,28 @@ class TimersFragment : ListFragment<Timer>() {
 
     private val adapter = TimersAdapter()
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_navigation, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_settings) {
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment, SettingsFragment())
+                .addToBackStack(null)
+                .commit()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         recyclerView.adapter = adapter
     }
 

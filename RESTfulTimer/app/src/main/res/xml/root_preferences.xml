@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:key="theme"
+        app:title="@string/settings_theme" />
+
+    <SeekBarPreference
+        app:defaultValue="10"
+        app:key="font"
+        app:title="@string/settings_font" />
+
+    <ListPreference
+        app:defaultValue="en"
+        app:entries="@array/reply_entries"
+        app:entryValues="@array/reply_values"
+        app:key="lang"
+        app:title="@string/settings_lang"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        app:key="clear"
+        app:title="@string/settings_clear" />
+
+</PreferenceScreen>

@@ -10,11 +10,12 @@ data class TimerStep(
     val description: String?,
     val duration: Int,
     val type: String,
-    var timerId : Long
+    var timerId: Long,
+    val position: Int
 ) {
 
     @PrimaryKey(autoGenerate = true)
     var stepId: Long? = null
 
-    fun convert() = TimerStep(stepId!!, name, description, duration, type)
+    fun convert() = TimerStep(stepId!!, name, description, duration, type, position)
 }

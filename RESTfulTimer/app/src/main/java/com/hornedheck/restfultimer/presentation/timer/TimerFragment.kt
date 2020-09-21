@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.hornedheck.restfultimer.R
 import com.hornedheck.restfultimer.entities.TimerStep
 import com.hornedheck.restfultimer.framework.models.StepType
@@ -31,6 +32,8 @@ class TimerFragment(id: Long) : ListFragment<TimerStep>() {
 
     private lateinit var submit: MenuItem
     private lateinit var decline: MenuItem
+
+    private val touchCallback = TimerTouchCallback()
 
     override fun submitData(data: List<TimerStep>) {
         adapter.items = data
@@ -69,7 +72,9 @@ class TimerFragment(id: Long) : ListFragment<TimerStep>() {
     override fun initUI() {
         super.initUI()
         setHasOptionsMenu(true)
+        swipeRefreshLayout.isEnabled = false
         recyclerView.adapter = adapter
+        ItemTouchHelper(touchCallback).attachToRecyclerView(recyclerView)
         fabCalmDown.setOnClickListener { addStep(StepType.CALM_DOWN) }
         fabPrepare.setOnClickListener { addStep(StepType.PREPARE) }
         fabRepeats.setOnClickListener { addStep(StepType.REPEAT) }
@@ -108,6 +113,13 @@ class TimerFragment(id: Long) : ListFragment<TimerStep>() {
             dialog.show(requireActivity().supportFragmentManager, null)
         }
         viewModel.updateTitleEvent.observe(this, this::createTitleDialog)
+        touchCallback.itemSwiped.observe(this) {
+            viewModel.removeStep(it)
+        }
+        touchCallback.onItemMove.observe(this) { (from, to) ->
+            viewModel.moveStep(from, to)
+            adapter.moveItem(from, to)
+        }
     }
 
     override fun onStop() {
@@ -144,5 +156,4 @@ class TimerFragment(id: Long) : ListFragment<TimerStep>() {
 
         dialog.show()
     }
-
 }

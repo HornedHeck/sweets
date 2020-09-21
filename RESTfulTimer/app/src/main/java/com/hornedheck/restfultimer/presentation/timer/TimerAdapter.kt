@@ -33,6 +33,11 @@ class TimerAdapter : BaseAdapter<TimerStep, TimerStepViewHolder>() {
         return TimerStepViewHolder(binding)
     }
 
+    fun moveItem(from: Int, to: Int) {
+        _items[from] = _items[to].also { _items[to] = _items[from] }
+        notifyItemMoved(from, to)
+    }
+
     inner class TimerStepViewHolder(binding: ItemTimerStepBinding) :
         BaseViewHolder<TimerStep>(binding.root) {
 
@@ -41,9 +46,11 @@ class TimerAdapter : BaseAdapter<TimerStep, TimerStepViewHolder>() {
         private val duration = binding.etDuration
         private val add = binding.ibAdd
         private val sub = binding.ibSub
+        lateinit var type: StepType
+            private set
 
         override fun bind(item: TimerStep) {
-            val type = StepType.valueOf(item.type)
+            type = StepType.valueOf(item.type)
             icon.setImageResource(type.icon)
             title.text = item.name
             duration.setText(item.duration.toString())

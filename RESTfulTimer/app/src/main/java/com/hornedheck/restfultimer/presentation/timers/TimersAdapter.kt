@@ -74,6 +74,11 @@ class TimerModel {
 }
 
 private fun formatDuration(context: Context, duration: Int): CharSequence {
+
+    if (duration == 0) {
+        return context.getString(R.string.duration_minutes, 0)
+    }
+
     val res = StringBuilder()
     (duration / 1440).let { days ->
         if (days > 0) {
