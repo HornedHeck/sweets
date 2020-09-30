@@ -14,8 +14,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadPreferences()
         setContentView(R.layout.activity_main)
+        loadPreferences()
         setSupportActionBar(toolbar)
         supportFragmentManager
             .beginTransaction()

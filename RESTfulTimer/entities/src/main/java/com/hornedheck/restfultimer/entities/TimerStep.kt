@@ -5,6 +5,6 @@ data class TimerStep(
     val name: String,
     var description: String?,
     var duration: Int,
-    val type: String,
+    val type: Int,
     var position: Int = 0
 )

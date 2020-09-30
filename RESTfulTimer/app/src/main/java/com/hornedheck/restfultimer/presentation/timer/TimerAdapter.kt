@@ -50,7 +50,7 @@ class TimerAdapter : BaseAdapter<TimerStep, TimerStepViewHolder>() {
             private set
 
         override fun bind(item: TimerStep) {
-            type = StepType.valueOf(item.type)
+            type = StepType.values()[item.type]
             icon.setImageResource(type.icon)
             title.text = item.name
             duration.setText(item.duration.toString())

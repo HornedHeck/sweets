@@ -10,6 +10,7 @@ import com.hornedheck.restfultimer.entities.Timer
 import com.hornedheck.restfultimer.presentation.list.ListFragment
 import com.hornedheck.restfultimer.presentation.settings.SettingsFragment
 import com.hornedheck.restfultimer.presentation.timer.TimerFragment
+import com.hornedheck.restfultimer.service.TimerService
 import kotlinx.android.synthetic.main.fragment_timers.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -65,6 +66,12 @@ class TimersFragment : ListFragment<Timer>() {
                 .replace(R.id.fragment, TimerFragment(it))
                 .addToBackStack(null)
                 .commit()
+        }
+        adapter.runClicked.observe(this) {
+            viewModel.runClicked(it)
+        }
+        viewModel.schedule.observe(this) {
+            requireActivity().startService(TimerService.getStartIntent(requireContext(), it.id))
         }
     }
 }

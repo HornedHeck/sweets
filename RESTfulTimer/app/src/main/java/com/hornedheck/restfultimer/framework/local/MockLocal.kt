@@ -35,10 +35,10 @@ class MockLocal : LocalApi {
     }
 
     private val steps = mutableListOf(
-        TimerStep(1, "Prepare", null, 10, EStepType.REST.name, 0),
-        TimerStep(1, "Work", null, 40, EStepType.WORK.name, 1),
-        TimerStep(1, "Repeats", null, 2, EStepType.REPEAT.name, 2),
-        TimerStep(1, "Sets", null, 1, EStepType.SETS.name, 3),
+        TimerStep(1, "Prepare", null, 10, EStepType.REST.ordinal, 0),
+        TimerStep(1, "Work", null, 40, EStepType.WORK.ordinal, 1),
+        TimerStep(1, "Repeats", null, 2, EStepType.REPEAT.ordinal, 2),
+        TimerStep(1, "Sets", null, 1, EStepType.SETS.ordinal, 3),
     )
 
     override suspend fun updateTimer(timer: Timer): Response<Unit> {

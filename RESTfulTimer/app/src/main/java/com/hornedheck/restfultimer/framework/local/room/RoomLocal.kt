@@ -65,10 +65,10 @@ class RoomLocal(context: Context) : LocalApi {
 
     private fun getDefaultTimerSteps(): List<LTimerStep> {
         return listOf(
-            LTimerStep("Prepare", null, 10, StepType.PREPARE.name, 0, 0),
-            LTimerStep("Work", null, 40, StepType.WORK.name, 0, 1),
-            LTimerStep("Repeats", null, 2, StepType.REPEAT.name, 0, 2),
-            LTimerStep("Sets", null, 1, StepType.SETS.name, 0, 3),
+            LTimerStep("Prepare", null, 10, StepType.PREPARE.ordinal, 0, 0),
+            LTimerStep("Work", null, 40, StepType.WORK.ordinal, 0, 1),
+            LTimerStep("Repeats", null, 2, StepType.REPEAT.ordinal, 0, 2),
+            LTimerStep("Sets", null, 1, StepType.SETS.ordinal, 0, 3),
         )
     }
 

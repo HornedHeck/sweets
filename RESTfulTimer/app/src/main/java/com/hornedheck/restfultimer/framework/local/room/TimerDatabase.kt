@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.hornedheck.restfultimer.framework.models.TimerRaw
 import com.hornedheck.restfultimer.framework.models.TimerStep
 
-@Database(entities = [TimerRaw::class, TimerStep::class], version = 5, exportSchema = false)
+@Database(entities = [TimerRaw::class, TimerStep::class], version = 6, exportSchema = false)
 abstract class TimerDatabase : RoomDatabase() {
 
     abstract val timerDao: TimerDao

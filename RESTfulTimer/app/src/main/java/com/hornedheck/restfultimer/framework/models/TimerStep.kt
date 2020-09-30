@@ -9,7 +9,7 @@ data class TimerStep(
     val name: String,
     val description: String?,
     val duration: Int,
-    val type: String,
+    val type: Int,
     var timerId: Long,
     val position: Int
 ) {

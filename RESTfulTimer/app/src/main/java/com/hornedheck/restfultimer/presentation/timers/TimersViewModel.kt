@@ -1,8 +1,10 @@
 package com.hornedheck.restfultimer.presentation.timers
 
+import androidx.lifecycle.LiveData
 import com.hornedheck.restfultimer.data.Repository
 import com.hornedheck.restfultimer.entities.Timer
 import com.hornedheck.restfultimer.presentation.list.ListViewModel
+import com.hornedheck.restfultimer.utils.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,4 +42,19 @@ class TimersViewModel(repository: Repository) : ListViewModel<Timer>(repository)
             }
         }
     }
+
+    private val _schedule = SingleLiveEvent<Timer>()
+    val schedule: LiveData<Timer> = _schedule
+
+    fun runClicked(id: Long) {
+        CoroutineScope(Dispatchers.Main).launch {
+            val res = withContext(Dispatchers.IO) {
+                repository.getTimer(id)
+            }
+            if (res.isSuccessful) {
+                _schedule.postValue(res.data!!)
+            }
+        }
+    }
+
 }

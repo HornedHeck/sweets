@@ -8,10 +8,6 @@ data class Response<out T>(
     fun <V> map(block: (T) -> V): Response<V> {
         return Response(data?.let { block(it) }, isSuccessful)
     }
-//
-//    fun <V> flatMap(block: (T) -> List<V>) : Response<List<V>>{
-//        return Response(data?.let { block(it) }, isSuccessful)
-//    }
 
     companion object {
         val Success = Response(Unit, true)
@@ -22,6 +18,7 @@ data class Response<out T>(
 fun <T> handle(block: () -> T) = try {
     Response(block(), true)
 } catch (e: Exception) {
+    e.printStackTrace()
     Response(null, false)
 }
 
@@ -29,5 +26,6 @@ fun handleUnit(block: () -> Unit) = try {
     block()
     Response.Success
 } catch (e: Exception) {
+    e.printStackTrace()
     Response.Fail
 }

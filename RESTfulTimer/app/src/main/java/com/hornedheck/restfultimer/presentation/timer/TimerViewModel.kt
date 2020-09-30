@@ -68,14 +68,14 @@ class TimerViewModel(private val id: Long, repository: Repository) :
 
             when (type) {
                 StepType.PREPARE, StepType.SETS, StepType.SETS_REST, StepType.CALM_DOWN -> {
-                    if (timer.steps!!.any { it.type == type.name }) {
+                    if (timer.steps!!.any { it.type == type.ordinal }) {
                         return@launch
                     }
                 }
                 else -> {
                 }
             }
-            timer.steps!!.add(TimerStep(null, title, null, type.min, type.name))
+            timer.steps!!.add(TimerStep(null, title, null, type.min, type.ordinal))
 
             sortSteps()
             items.show(timer.steps!!)
@@ -87,15 +87,15 @@ class TimerViewModel(private val id: Long, repository: Repository) :
         timer.steps ?: return
         val timerSteps = timer.steps!!
         val steps = mutableListOf<TimerStep>()
-        timerSteps.find { it.type == StepType.PREPARE.name }?.let(steps::add)
+        timerSteps.find { it.type == StepType.PREPARE.ordinal }?.let(steps::add)
         timerSteps.filter {
-            it.type == StepType.WORK.name ||
-                    it.type == StepType.REST.name ||
-                    it.type == StepType.REPEAT.name
+            it.type == StepType.WORK.ordinal ||
+                    it.type == StepType.REST.ordinal ||
+                    it.type == StepType.REPEAT.ordinal
         }.let { steps.addAll(it) }
-        timerSteps.find { it.type == StepType.SETS.name }?.let(steps::add)
-        timerSteps.find { it.type == StepType.SETS_REST.name }?.let(steps::add)
-        timerSteps.find { it.type == StepType.CALM_DOWN.name }?.let(steps::add)
+        timerSteps.find { it.type == StepType.SETS.ordinal }?.let(steps::add)
+        timerSteps.find { it.type == StepType.SETS_REST.ordinal }?.let(steps::add)
+        timerSteps.find { it.type == StepType.CALM_DOWN.ordinal }?.let(steps::add)
         timer.steps!!.clear()
         timer.steps!!.addAll(steps)
         timer.steps!!.forEachIndexed { i, it -> it.position = i }
@@ -109,23 +109,23 @@ class TimerViewModel(private val id: Long, repository: Repository) :
         var duration = 0
         var limit = timerSteps.size
         var i = 0
-        if (timerSteps.first().type == StepType.PREPARE.name) {
+        if (timerSteps.first().type == StepType.PREPARE.ordinal) {
             i += 1
             duration += timerSteps.first().duration
         }
-        val steps = timerSteps.findLast { it.type == StepType.SETS.name }
-        val stepRest = timerSteps.findLast { it.type == StepType.SETS_REST.name }
-        val calmDown = timerSteps.findLast { it.type == StepType.CALM_DOWN.name }
+        val steps = timerSteps.findLast { it.type == StepType.SETS.ordinal }
+        val stepRest = timerSteps.findLast { it.type == StepType.SETS_REST.ordinal }
+        val calmDown = timerSteps.findLast { it.type == StepType.CALM_DOWN.ordinal }
         limit -= listOfNotNull(steps, stepRest, calmDown).size
 
         var workDuration = 0
         var cycleDuration = 0
         while (i < limit) {
             when (timerSteps[i].type) {
-                StepType.REST.name, StepType.WORK.name -> {
+                StepType.REST.ordinal, StepType.WORK.ordinal -> {
                     cycleDuration += timerSteps[i].duration
                 }
-                StepType.REPEAT.name -> {
+                StepType.REPEAT.ordinal -> {
                     workDuration += cycleDuration * timerSteps[i].duration
                     cycleDuration = 0
                 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hornedheck.restfultimer">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:name=".utils.RestfulDayApp"
         android:allowBackup="true"
@@ -10,7 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.MainActivity">
+
+        <service
+            android:name=".service.TimerService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".presentation.MainActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
