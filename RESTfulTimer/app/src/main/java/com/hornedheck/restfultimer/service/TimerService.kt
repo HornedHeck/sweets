@@ -1,18 +1,21 @@
 package com.hornedheck.restfultimer.service
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Icon
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.hornedheck.restfultimer.R
 import com.hornedheck.restfultimer.data.Repository
 import com.hornedheck.restfultimer.framework.models.StepType
+import com.hornedheck.restfultimer.utils.createAction
+import com.hornedheck.restfultimer.utils.playRingtone
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,10 +23,12 @@ import kotlinx.coroutines.withContext
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
+
 class TimerService : Service(), KoinComponent {
 
     private val repo by inject<Repository>()
     private val builder: Notification.Builder by lazy {
+        @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = createChannel()
             Notification.Builder(this, channel)
@@ -31,40 +36,59 @@ class TimerService : Service(), KoinComponent {
             Notification.Builder(this)
         }
             .setSound(null)
-            .setContentTitle("Title")
-            .setSmallIcon(R.drawable.ic_run)
+            .setSmallIcon(R.drawable.ic_all_repeats)
             .setStyle(Notification.BigTextStyle())
-            .addAction(createAction(R.drawable.ic_pause, "Pause", PAUSE_COMMAND))
-            .addAction(createAction(R.drawable.ic_skip, "Skip", NEXT_COMMAND))
-    }
-
-    private fun createAction(@DrawableRes icon: Int, title: CharSequence, action: String) =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Notification.Action.Builder(
-                Icon.createWithResource(this, icon),
-                title,
-                PendingIntent.getService(
+            .addAction(
+                createAction(
                     this,
-                    0,
-                    Intent(this, TimerService::class.java).setAction(action),
-                    0
-                )
-            ).build()
-        } else {
-            Notification.Action(
-                icon,
-                title,
-                PendingIntent.getService(
-                    this,
-                    0,
-                    Intent(this, TimerService::class.java).setAction(action),
-                    0
+                    R.drawable.ic_stop,
+                    getString(R.string.command_stop),
+                    STOP_COMMAND
                 )
             )
-        }
+            .addAction(
+                createAction(
+                    this,
+                    R.drawable.ic_pause,
+                    getString(R.string.command_pause),
+                    PAUSE_COMMAND
+                )
+            )
+            .addAction(
+                createAction(
+                    this,
+                    R.drawable.ic_skip,
+                    getString(R.string.command_skip),
+                    NEXT_COMMAND
+                )
+            )
+
+    }
+    private val pauseActions by lazy {
+        arrayOf(
+            createAction(
+                this,
+                R.drawable.ic_stop,
+                getString(R.string.command_stop),
+                STOP_COMMAND
+            ),
+            createAction(
+                this,
+                R.drawable.ic_run,
+                getString(R.string.command_resume),
+                RESUME_COMMAND
+            ),
+            createAction(
+                this,
+                R.drawable.ic_skip,
+                getString(R.string.command_skip),
+                NEXT_COMMAND
+            )
+        )
+    }
+    private var contentString = ""
 
     private val notificationId = 1488
-    private lateinit var executor: StepsExecutor
 
     override fun onBind(intent: Intent): IBinder {
         return Binder()
@@ -101,23 +125,16 @@ class TimerService : Service(), KoinComponent {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val notification = createNotification("Initial text")
         when (intent?.action) {
             START_COMMAND -> {
-                startForeground(notificationId, notification)
-                StepsExecutor.notifyStep = { progress, step ->
-                    updateNotification("${step.name} $progress/${step.duration}")
-                }
-                CoroutineScope(Dispatchers.Main).launch { action(intent.getLongExtra(ID_KEY, 0)) }
+                startForeground(notificationId, createNotification(""))
+                configureStepsExecutor()
+                start(intent.getLongExtra(ID_KEY, 0))
             }
             PAUSE_COMMAND -> {
                 StepsExecutor.pause()
-//                createNotification("Paused")
-                updateNotification("Paused") {
-                    it.actions = arrayOf(
-                        createAction(R.drawable.ic_run, "Resume", RESUME_COMMAND),
-                        createAction(R.drawable.ic_skip, "Skip", NEXT_COMMAND)
-                    )
+                updateNotification(getString(R.string.status_paused) + contentString) {
+                    it.actions = pauseActions
                 }
             }
             RESUME_COMMAND -> {
@@ -126,30 +143,47 @@ class TimerService : Service(), KoinComponent {
             NEXT_COMMAND -> {
                 StepsExecutor.skip()
             }
+            STOP_COMMAND -> {
+                StepsExecutor.stop()
+            }
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private suspend fun action(id: Long) {
-
-        val timer = withContext(Dispatchers.IO) {
-            repo.getTimer(id)
-        }.data!!
-        val steps = timer.steps!!.map {
-            Step(
-                it.name,
-                it.description,
-                it.duration,
-                StepType.values()[it.type],
-                it.position
-            )
-        }.sortedBy { it.position }
-
-//        executor = StepsExecutor(steps) { progress, step ->
-//            updateNotification("${step.name} $progress/${step.duration}")}
-        StepsExecutor.start(steps)
+    private fun configureStepsExecutor() {
+        StepsExecutor.notifyStep = { progress, step ->
+            contentString = "${step.name} $progress/${step.duration}"
+            updateNotification(contentString)
+        }
+        StepsExecutor.notifyFinished = {
+            updateNotification(getString(R.string.status_finished)) {
+                it.actions = emptyArray()
+            }
+            playRingtone(this)
+            stopForeground(false)
+        }
+        StepsExecutor.notifyStepFinished = { playRingtone(this) }
     }
 
+    private fun start(id: Long) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val timer = withContext(Dispatchers.IO) {
+                repo.getTimer(id)
+            }.data!!
+            builder.setContentTitle(timer.name)
+            val steps = timer.steps!!.map {
+                Step(
+                    it.name,
+                    it.description,
+                    it.duration,
+                    StepType.values()[it.type],
+                    it.position
+                )
+            }.sortedBy { it.position }
+            StepsExecutor.stop(false)
+            StepsExecutor.start(steps)
+        }
+    }
 
     companion object {
         const val ID_KEY = "timer_id"
@@ -159,13 +193,13 @@ class TimerService : Service(), KoinComponent {
         private const val PAUSE_COMMAND = "Timer.Pause"
         private const val RESUME_COMMAND = "Timer.Resume"
         private const val NEXT_COMMAND = "Timer.Next"
+        private const val STOP_COMMAND = "Timer.Stop"
 
         fun getStartIntent(context: Context, id: Long): Intent {
             return Intent(context, TimerService::class.java)
                 .putExtra(ID_KEY, id)
                 .setAction(START_COMMAND)
         }
-
     }
 }
 

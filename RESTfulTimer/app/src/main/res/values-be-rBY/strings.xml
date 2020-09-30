@@ -22,4 +22,10 @@
     <string name="yes">Так</string>
     <string name="no">Не</string>
     <string name="error_empty">Нічога не загружана</string>
+    <string name="command_resume">Працягнуць</string>
+    <string name="command_skip">Прапусціць</string>
+    <string name="status_paused">Прыпынена:</string>
+    <string name="status_finished">Завершана</string>
+    <string name="command_stop">Стоп</string>
+    <string name="command_pause">Прыпыніць</string>
 </resources>

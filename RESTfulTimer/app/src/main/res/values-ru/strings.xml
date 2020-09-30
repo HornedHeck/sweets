@@ -22,4 +22,10 @@
     <string name="settings_clear_warning">Вы уверены что хотите удалить все данные?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="command_resume">Продолжить</string>
+    <string name="command_skip">Пропустить</string>
+    <string name="status_paused">Приостановлено:</string>
+    <string name="status_finished">Завершено</string>
+    <string name="command_stop">Стоп</string>
+    <string name="command_pause">Приостановить</string>
 </resources>

@@ -25,4 +25,10 @@
     <string name="settings_clear_warning">Do you want to wipe all timers data?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="command_resume">Resume</string>
+    <string name="command_skip">Skip</string>
+    <string name="status_paused">\"Paused: \"</string>
+    <string name="status_finished">Finished</string>
+    <string name="command_stop">Stop</string>
+    <string name="command_pause">Pause</string>
 </resources>
