@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "50015973578",
+    "firebase_url": "https://echos-daf64.firebaseio.com",
+    "project_id": "echos-daf64",
+    "storage_bucket": "echos-daf64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50015973578:android:ab724bccfa50a65e094433",
+        "android_client_info": {
+          "package_name": "com.hornedheck.echos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50015973578-bd5nn0m1d051nvoff55grjn9m4vq1rj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV05e27_0zjCZs9moXbrE1bZyAljCX0oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50015973578-bd5nn0m1d051nvoff55grjn9m4vq1rj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

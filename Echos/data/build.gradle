@@ -46,9 +46,11 @@ dependencies {
 //  RX
     implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
-//  Firebase
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
-    implementation 'com.google.firebase:firebase-database-ktx'
+//  Firebase & Google Services
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-database-ktx:19.5.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
