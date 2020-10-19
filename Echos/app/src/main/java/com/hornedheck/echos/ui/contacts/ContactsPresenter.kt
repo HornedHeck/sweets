@@ -1,7 +1,7 @@
 package com.hornedheck.echos.ui.contacts
 
 import com.hornedheck.echos.base.BasePresenter
-import com.hornedheck.echos.data.models.User
+import com.hornedheck.echos.data.models.ChannelInfo
 import com.hornedheck.echos.data.repo.MessagesRepo
 import com.hornedheck.echos.navigation.MessagesScreen
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -21,14 +21,13 @@ class ContactsPresenter @Inject constructor(
         disposable.add(repo.observeContracts().subscribe(viewState::addContact))
     }
 
-    fun selectContact(user: User) {
-        router.navigateTo(MessagesScreen(user.id))
+    fun selectContact(info: ChannelInfo) {
+        router.navigateTo(MessagesScreen(info.id))
     }
 
     fun addContact(link: String) {
-        if (!repo.addContact(link)) {
-            viewState.showError("", "Wrong link $link")
-        }
+        repo.addContact(link, 5)
+            .subscribe({}, { viewState.showError("", "Wrong link $link") })
     }
 
     override fun onDestroy() {

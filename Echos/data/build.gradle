@@ -44,7 +44,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
 //  RX
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
 
 //  Firebase & Google Services
     implementation 'com.google.firebase:firebase-analytics:17.6.0'

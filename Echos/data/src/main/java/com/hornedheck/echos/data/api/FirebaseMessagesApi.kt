@@ -4,19 +4,21 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.hornedheck.echos.data.models.User
+import com.hornedheck.echos.data.api.models.ChannelInfoEntity
+import com.hornedheck.echos.data.api.models.UserEntity
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.ReplaySubject
 import io.reactivex.rxjava3.subjects.Subject
-import kotlin.reflect.KClass
 
 class FirebaseMessagesApi : MessagesApi {
 
     companion object {
         private const val MESSAGES = "messages"
+        private const val CHANNELS = "channels"
         private const val USERS = "users"
-        private const val CONTACTS = "contacts"
     }
 
     private val db = Firebase.database.reference
@@ -24,54 +26,46 @@ class FirebaseMessagesApi : MessagesApi {
     //  TODO replace with Firebase Auth
     private val id = "ID"
 
-    private val contactsObservable = ReplaySubject.create<User>()
+    override fun getContact(link: String): Maybe<UserEntity> =
+        db.child(USERS).values { it.getValue<UserEntity>()!! }
+            .filter { it.link == link }
+            .firstElement()
 
-
-    init {
-        db.child(USERS).child(id).child(CONTACTS).addChildEventListener(
-            ObservableChildListener(contactsObservable, User::class)
-        )
-    }
-
-    override fun observeContracts(): Observable<User> {
-        return contactsObservable
-    }
-
-    override fun addContact(link: String): Boolean {
-        val items = db.child(USERS).values<User>().blockingGet()
-        val user = items.firstOrNull { it.link == link }
-        user?.let {
-            db.child(USERS).child(id).child(CONTACTS).push().setValue(it.id)
+    override fun addContact(info: ChannelInfoEntity): Completable {
+        return Completable.create {
+            db.child(USERS).child(id).child(CHANNELS).push().setValue(info)
         }
-        return user != null
     }
 
+    override fun createChannel(user: UserEntity): Single<ChannelInfoEntity> = Single.create {
+        val push = db.child(CHANNELS).push()
+        val info = ChannelInfoEntity(push.key!!, user.name, user.link)
+        it.onSuccess(info)
+    }
 
-    private inline fun <reified T : Any> DatabaseReference.values(): Single<List<T>> {
-        return Single.create {
-            ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    it.onSuccess(
-                        snapshot.children.mapNotNull { item -> item.getValue<T>() }.toList()
-                    )
-                }
+    override fun getChannels(): Observable<ChannelInfoEntity> =
+        db.child(USERS).child(id).child(CHANNELS)
+            .values { it.getValue<ChannelInfoEntity>()!! }
 
-                override fun onCancelled(error: DatabaseError) {
-                    it.tryOnError(error.toException())
-                }
-            })
+    override fun observeContracts(): Observable<ChannelInfoEntity> {
+        val subject = ReplaySubject.create<ChannelInfoEntity>()
+        val listener = ObservableChildListener(subject) { it.getValue<ChannelInfoEntity>()!! }
+        db.child(USERS).child(id).child(CHANNELS).addChildEventListener(listener)
+        subject.doOnDispose {
+            db.child(USERS).child(id).child(CHANNELS).removeEventListener(listener)
         }
+        return subject
     }
 }
 
 
 class ObservableChildListener<T : Any>(
     private val subject: Subject<T>,
-    private val cls: KClass<T>
+    private val converter: (DataSnapshot) -> T
 ) : ChildEventListener {
 
     override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-        subject.onNext(snapshot.getValue(cls.java))
+        subject.onNext(converter(snapshot))
     }
 
     override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
@@ -82,5 +76,19 @@ class ObservableChildListener<T : Any>(
 
     override fun onCancelled(error: DatabaseError) {
         subject.onError(error.toException())
+    }
+}
+
+private inline fun <reified T : Any?> DatabaseReference.values(crossinline converter: (DataSnapshot) -> T): Observable<T> {
+    return Observable.create { emitter ->
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.map { converter(it) }.forEach(emitter::onNext)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                emitter.tryOnError(error.toException())
+            }
+        })
     }
 }

@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hornedheck.echos.R
-import com.hornedheck.echos.data.models.User
+import com.hornedheck.echos.data.models.ChannelInfo
 
 class ContactsAdapter(
-    private val itemCallback: (User) -> Unit
+    private val itemCallback: (ChannelInfo) -> Unit
 ) : RecyclerView.Adapter<ContactViewHolder>() {
 
-    private val items = mutableListOf<User>()
+    private val items = mutableListOf<ChannelInfo>()
 
-    fun addContact(item: User) {
+    fun addContact(item: ChannelInfo) {
         items.add(item)
         notifyItemInserted(items.size - 1)
     }

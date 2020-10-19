@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hornedheck.echos.R
 import com.hornedheck.echos.appComponent
 import com.hornedheck.echos.base.BaseFragment
-import com.hornedheck.echos.data.models.User
+import com.hornedheck.echos.data.models.ChannelInfo
 import com.hornedheck.echos.utils.textInputDialog
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import moxy.presenter.InjectPresenter
@@ -40,5 +40,5 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts), ContactsView 
 
     override fun inject() = appComponent.inject(this)
 
-    override fun addContact(user: User) = adapter.addContact(user)
+    override fun addContact(info: ChannelInfo) = adapter.addContact(info)
 }
