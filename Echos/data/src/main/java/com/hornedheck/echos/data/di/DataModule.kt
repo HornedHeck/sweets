@@ -1,7 +1,7 @@
 package com.hornedheck.echos.data.di
 
 import com.hornedheck.echos.data.api.MessagesApi
-import com.hornedheck.echos.data.api.MessagesApiImpl
+import com.hornedheck.echos.data.api.TempMessagesApi
 import com.hornedheck.echos.data.repo.MessagesRepo
 import com.hornedheck.echos.data.repo.MessagesRepoImpl
 import dagger.Module
@@ -13,7 +13,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesMessagesApi(): MessagesApi = MessagesApiImpl()
+    fun providesMessagesApi(): MessagesApi = TempMessagesApi()
 
     @Provides
     @Singleton

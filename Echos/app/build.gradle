@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'org.jetbrains.kotlin.kapt'
 }
 
@@ -33,6 +34,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':data')
@@ -44,6 +49,9 @@ dependencies {
 //  Views
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+
+//  RX
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
 //  DI
     api "com.google.dagger:dagger:$dagger_version"
