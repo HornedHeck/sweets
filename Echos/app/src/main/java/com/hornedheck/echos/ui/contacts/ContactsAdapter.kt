@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hornedheck.echos.R
 import com.hornedheck.echos.data.models.User
 
-class ContactsAdapter : RecyclerView.Adapter<ContactViewHolder>() {
+class ContactsAdapter(
+    private val itemCallback: (User) -> Unit
+) : RecyclerView.Adapter<ContactViewHolder>() {
 
     private val items = mutableListOf<User>()
 
@@ -17,7 +19,7 @@ class ContactsAdapter : RecyclerView.Adapter<ContactViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
-        return ContactViewHolder(view)
+        return ContactViewHolder(view , itemCallback)
     }
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) =

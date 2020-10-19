@@ -10,7 +10,6 @@ class NavigationModule {
 
     private val cicerone = Cicerone.create()
 
-
     @Provides
     @Singleton
     fun providesRouter() = cicerone.router
