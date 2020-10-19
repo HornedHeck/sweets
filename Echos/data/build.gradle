@@ -44,7 +44,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
 //  RX
-    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.4'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.4'
 
 //  Firebase
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
