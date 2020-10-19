@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.hornedheck.echos.di.AppComponent
 import com.hornedheck.echos.di.DaggerAppComponent
+import timber.log.Timber
 
 class EchosApp : Application() {
 
@@ -13,6 +14,7 @@ class EchosApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Timber.plant(Timber.DebugTree())
         appComponent = DaggerAppComponent.create()
     }
 
