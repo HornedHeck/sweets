@@ -19,7 +19,12 @@ class ContactsPresenter @Inject constructor(
     private val disposable = CompositeDisposable()
 
     init {
-        disposable.add(repo.observeContracts().subscribe(viewState::addContact))
+        disposable.add(repo.observeContracts().subscribe(viewState::addContact) {
+            viewState.showError(
+                "Error",
+                it.message ?: "NPE"
+            )
+        })
     }
 
     fun selectContact(info: ChannelInfo) {

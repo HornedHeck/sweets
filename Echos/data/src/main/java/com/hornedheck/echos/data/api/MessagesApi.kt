@@ -3,17 +3,24 @@ package com.hornedheck.echos.data.api
 import com.hornedheck.echos.data.api.models.ChannelInfoEntity
 import com.hornedheck.echos.data.api.models.MessageEntity
 import com.hornedheck.echos.data.api.models.UserEntity
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MessagesApi {
 
     /** Returns full user info
-     *  @param id User id
+     *  @param token User id
      *  @return info about user (name, link, etc)
      *  @see UserEntity
      */
-    fun getUser(id: String): Single<UserEntity>
+    fun getUser(token: String): Single<UserEntity>
+
+    /** Updates token for specified user
+     *  @param user user info with new token
+     *  @see UserEntity
+     */
+    fun loginUser(user: UserEntity): Completable
 
     /** Tries to find user by link
      *  @param link link to user (@...)
@@ -23,10 +30,10 @@ interface MessagesApi {
     fun findUser(link: String): Single<String>
 
     /** Returns all channels for specified user
-     *  @param id User id
+     *  @param token User id
      *  @return channel Ids for user
      */
-    fun getUserChannels(id: String): Observable<String>
+    fun getUserChannels(token: String): Observable<String>
 
     /** Return full channel info for specified channel
      *  @param channelId Channel Id
@@ -49,9 +56,9 @@ interface MessagesApi {
     fun getMessages(channelId: String): Observable<MessageEntity>
 
     /** Observe add event on user channels and returns observable to it.
-     *  @param id User id
+     *  @param token User id
      *  @return channel ids
      */
-    fun observeChannels(id: String): Observable<String>
+    fun observeChannels(token: String): Observable<String>
 
 }
