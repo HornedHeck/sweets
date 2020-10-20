@@ -16,8 +16,8 @@ class ContactViewHolder(
 
     fun bind(item: ChannelInfo) {
         itemView.setOnClickListener { itemCallback(item) }
-        tvName.text = item.name
-        tvLink.text = item.link
+        tvName.text = item.user.name
+        tvLink.text = item.user.link
     }
 
 }

@@ -1,3 +1,4 @@
+include ':fireRx3'
 include ':data'
 include ':app'
 rootProject.name = "Echos"

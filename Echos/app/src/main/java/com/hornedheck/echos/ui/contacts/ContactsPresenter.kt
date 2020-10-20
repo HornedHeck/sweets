@@ -7,6 +7,7 @@ import com.hornedheck.echos.navigation.MessagesScreen
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
@@ -26,8 +27,13 @@ class ContactsPresenter @Inject constructor(
     }
 
     fun addContact(link: String) {
-        repo.addContact(link, 5)
-            .subscribe({}, { viewState.showError("", "Wrong link $link") })
+        repo.addContact(link)
+            .subscribe({
+                Timber.d("Successful for $link")
+            }, {
+                Timber.d("Fail for $link")
+                viewState.showError("", "Wrong link $link")
+            })
     }
 
     override fun onDestroy() {
