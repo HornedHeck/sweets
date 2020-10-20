@@ -9,4 +9,7 @@ interface BaseView : MvpView {
     @OneExecution
     fun showError(title: String, content: String)
 
+    @OneExecution
+    fun showError(e: Throwable)
+
 }

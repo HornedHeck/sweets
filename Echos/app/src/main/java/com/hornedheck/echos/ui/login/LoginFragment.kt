@@ -1,21 +1,17 @@
-package com.hornedheck.echos.ui
+package com.hornedheck.echos.ui.login
 
 import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.hornedheck.echos.R
 import com.hornedheck.echos.appComponent
-import com.hornedheck.echos.base.BaseActivity
-import com.hornedheck.echos.navigation.EchosNavigator
-import com.hornedheck.echos.ui.login.LoginPresenter
-import com.hornedheck.echos.ui.login.LoginView
+import com.hornedheck.echos.base.BaseFragment
+import com.hornedheck.echos.utils.textInputDialog
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(R.layout.activity_main), LoginView {
+class LoginFragment : BaseFragment(), LoginView {
 
     @Inject
     @InjectPresenter
@@ -49,26 +45,22 @@ class MainActivity : BaseActivity(R.layout.activity_main), LoginView {
         )
     }
 
-    @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var navHolder: NavigatorHolder
-
-    private val navigator = EchosNavigator(this, R.id.flRootContainer)
-
     override fun inject() {
         appComponent.inject(this)
     }
 
-    override fun onResumeFragments() {
-        super.onResumeFragments()
-        navHolder.setNavigator(navigator)
+    override fun getName() {
+        requireContext().textInputDialog(
+            presenter::onNameSelected,
+            title = R.string.login_username_title
+        ).show()
     }
 
-    override fun onPause() {
-        super.onPause()
-        navHolder.removeNavigator()
+    override fun wrongName() {
+        requireContext().textInputDialog(
+            presenter::onNameSelected,
+            title = R.string.login_username_title,
+            message = R.string.login_username_error
+        ).show()
     }
-
 }

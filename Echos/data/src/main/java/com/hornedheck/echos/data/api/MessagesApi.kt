@@ -2,32 +2,11 @@ package com.hornedheck.echos.data.api
 
 import com.hornedheck.echos.data.api.models.ChannelInfoEntity
 import com.hornedheck.echos.data.api.models.MessageEntity
-import com.hornedheck.echos.data.api.models.UserEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MessagesApi {
-
-    /** Returns full user info
-     *  @param token User id
-     *  @return info about user (name, link, etc)
-     *  @see UserEntity
-     */
-    fun getUser(token: String): Single<UserEntity>
-
-    /** Updates token for specified user
-     *  @param user user info with new token
-     *  @see UserEntity
-     */
-    fun loginUser(user: UserEntity): Completable
-
-    /** Tries to find user by link
-     *  @param link link to user (@...)
-     *  @return user if it exists
-     *  @see UserEntity
-     */
-    fun findUser(link: String): Single<String>
 
     /** Returns all channels for specified user
      *  @param token User id
@@ -43,10 +22,11 @@ interface MessagesApi {
     fun getChannelInfo(channelId: String): Single<ChannelInfoEntity>
 
     /** Add channel to channels list, user1 channels and user2 channels
-     *  @param info info about chanel to insert
+     *  @param u1 first user token
+     *  @param u2 second user token
      *  @return id of created channel
      */
-    fun addChannel(info: ChannelInfoEntity): Single<String>
+    fun addChannel(u1 : String , u2 : String): Single<String>
 
     /** Get messages from specified channel
      *  @param channelId Channel Id
@@ -60,5 +40,12 @@ interface MessagesApi {
      *  @return channel ids
      */
     fun observeChannels(token: String): Observable<String>
+
+    /** Checks fox existing channel between 2 users
+     *  @param user1 token of first user
+     *  @param user2 token of second user
+     *  @return true - everything is ok, false - channel already exists
+     */
+    fun checkChannel(user1: String, user2: String): Single<Boolean>
 
 }

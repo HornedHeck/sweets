@@ -21,4 +21,8 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = 0) : MvpAppC
     override fun showError(title: String, content: String) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showError(e: Throwable) {
+        Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+    }
 }

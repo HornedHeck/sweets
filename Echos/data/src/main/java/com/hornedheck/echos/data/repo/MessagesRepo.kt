@@ -11,7 +11,6 @@ interface MessagesRepo {
 
     fun addContact(link: String): Completable
 
-    fun login(user: User): Completable
-
+    fun setToken(token: String)
 
 }

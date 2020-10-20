@@ -9,4 +9,10 @@ interface LoginView : BaseView {
     @SingleState
     fun startLogin()
 
+    @OneExecution
+    fun getName()
+
+    @OneExecution
+    fun wrongName()
+
 }

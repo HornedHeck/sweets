@@ -34,4 +34,8 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
     override fun showError(title: String, content: String) {
         Toast.makeText(context, content, Toast.LENGTH_SHORT).show()
     }
+
+    override fun showError(e: Throwable) {
+        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+    }
 }

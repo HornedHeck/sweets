@@ -21,6 +21,25 @@ inline fun <reified T : Any> DatabaseReference.getObservableValues(): Observable
         })
     }
 
+inline fun <reified T : Any> DatabaseReference.getObservableValuesWithKey(): Observable<Pair<String, T>> =
+    Observable.create { emitter ->
+        this.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children
+                    .mapNotNull { child ->
+                        child.key ?: return@mapNotNull null
+                        child.getValue<T>()?.let { child.key!! to it }
+                    }
+                    .forEach(emitter::onNext)
+                emitter.onComplete()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                emitter.onError(error.toException())
+            }
+        })
+    }
+
 inline fun <reified T : Any> DatabaseReference.observe(): Observable<T> {
     val subject = PublishSubject.create<T>()
     val listener = object : ChildEventListener {
