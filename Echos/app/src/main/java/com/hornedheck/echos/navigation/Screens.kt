@@ -15,4 +15,3 @@ class ContactsScreen : SupportAppScreen() {
 class MessagesScreen(private val id: String) : SupportAppScreen() {
 
 }
-

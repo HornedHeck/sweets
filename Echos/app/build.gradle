@@ -55,6 +55,9 @@ dependencies {
 //  RX
     implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
 
+//  Firebase
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 //  Cicerone
     implementation 'ru.terrakok.cicerone:cicerone:5.1.1'
 
