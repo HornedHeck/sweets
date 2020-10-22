@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import moxy.MvpAppCompatActivity
+import timber.log.Timber
 
 abstract class BaseActivity(@LayoutRes private val layoutRes: Int = 0) : MvpAppCompatActivity(),
     BaseView {
@@ -23,6 +24,7 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = 0) : MvpAppC
     }
 
     override fun showError(e: Throwable) {
+        Timber.e(e)
         Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
     }
 }

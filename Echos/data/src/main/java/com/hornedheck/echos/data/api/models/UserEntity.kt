@@ -9,6 +9,6 @@ data class UserEntity(
     var link: String = ""
 )
 
-internal fun UserEntity.toUser() = User(name, link, token, email)
+internal fun UserEntity.toUser() = User(token, name, email, link)
 
 internal fun User.toEntity() = UserEntity(token, name, email, link)

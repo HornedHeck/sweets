@@ -15,21 +15,21 @@ internal class UserApiImpl : UserApi {
     private val db = Firebase.database.reference
 
     private fun toUserId(token: String): Single<String> =
-        db.child(USERS).getObservableValuesWithKey<UserEntity>()
+        db.child(USERS).getObservableValuesWithKey(UserEntity::class)
             .filter { (_, user) -> user.token == token }
             .firstOrError()
             .map { (key, _) -> key }
 
     override fun getUser(token: String): Single<UserEntity> =
         toUserId(token).flatMap {
-            db.child(USERS).child(it).getSingleValue()
+            db.child(USERS).child(it).getSingleValue(UserEntity::class)
         }
 
     override fun loginUser(user: UserEntity): Completable =
-        db.child(USERS).getObservableValuesWithKey<UserEntity>()
-            .filter { (_, entity) -> entity.email == user.email }
+        db.child(USERS).getObservableValuesWithKey(UserEntity::class)
+            .filter { (_, entity) -> entity.email == entity.email }
             .firstElement()
-            .doOnSuccess { (key, user) ->
+            .doOnSuccess { (key, _) ->
                 db.child(USERS).child(key).child(TOKEN).setValue(user.token)
             }
             .doOnComplete {
@@ -39,18 +39,18 @@ internal class UserApiImpl : UserApi {
 
 
     override fun findUser(link: String): Single<UserEntity> =
-        db.child(USERS).getObservableValues<UserEntity>()
+        db.child(USERS).getObservableValues(UserEntity::class)
             .filter { it.link == link }
             .firstOrError()
 
     override fun checkName(name: String): Single<Boolean> =
         db.child(USERS)
-            .getObservableValues<UserEntity>()
+            .getObservableValues(UserEntity::class)
             .all { it.name != name }
 
     override fun isRegistered(email: String): Maybe<UserEntity> =
         db.child(USERS)
-            .getObservableValues<UserEntity>()
+            .getObservableValues(UserEntity::class)
             .filter { it.email == email }
             .firstElement()
 

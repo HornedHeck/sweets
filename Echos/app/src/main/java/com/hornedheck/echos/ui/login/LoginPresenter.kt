@@ -10,6 +10,7 @@ import com.hornedheck.echos.data.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
+import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
@@ -59,7 +60,9 @@ class LoginPresenter @Inject constructor(
                         messagesRepo.setToken(user.token)
                         router.newRootScreen(ContactsScreen())
                     },
-                    viewState::showError
+                    { t ->
+                        Timber.e(t)
+                    }/*viewState::showError*/
                 )
             }
     }

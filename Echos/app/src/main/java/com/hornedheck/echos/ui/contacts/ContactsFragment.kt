@@ -25,7 +25,10 @@ class ContactsFragment : BaseFragment(R.layout.fragment_contacts), ContactsView 
     private lateinit var adapter: ContactsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().setTheme(R.style.Theme_Echos)
+
         super.onViewCreated(view, savedInstanceState)
+
         adapter = ContactsAdapter(presenter::selectContact)
         rvContacts.adapter = adapter
         rvContacts.layoutManager = LinearLayoutManager(requireContext())

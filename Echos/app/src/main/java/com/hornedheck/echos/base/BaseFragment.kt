@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import moxy.MvpAppCompatFragment
+import timber.log.Timber
 
 abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
     MvpAppCompatFragment(),
@@ -36,6 +37,7 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
     }
 
     override fun showError(e: Throwable) {
-        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        Timber.e(e)
+//        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
     }
 }

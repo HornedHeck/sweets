@@ -45,6 +45,8 @@ internal class MessagesRepoImpl(
                     }
                 }
             }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
 
 
 }

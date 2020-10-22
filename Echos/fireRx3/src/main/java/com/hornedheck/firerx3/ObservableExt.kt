@@ -1,16 +1,16 @@
 package com.hornedheck.firerx3
 
 import com.google.firebase.database.*
-import com.google.firebase.database.ktx.getValue
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlin.reflect.KClass
 
-inline fun <reified T : Any> DatabaseReference.getObservableValues(): Observable<T> =
+fun <T : Any> DatabaseReference.getObservableValues(cls: KClass<T>): Observable<T> =
     Observable.create {
         this.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children
-                    .mapNotNull { child -> child.getValue<T>() }
+                    .mapNotNull { child -> child.getValue(cls.java) }
                     .forEach(it::onNext)
                 it.onComplete()
             }
@@ -21,14 +21,14 @@ inline fun <reified T : Any> DatabaseReference.getObservableValues(): Observable
         })
     }
 
-inline fun <reified T : Any> DatabaseReference.getObservableValuesWithKey(): Observable<Pair<String, T>> =
+fun <T : Any> DatabaseReference.getObservableValuesWithKey(cls: KClass<T>): Observable<Pair<String, T>> =
     Observable.create { emitter ->
         this.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children
                     .mapNotNull { child ->
                         child.key ?: return@mapNotNull null
-                        child.getValue<T>()?.let { child.key!! to it }
+                        child.getValue(cls.java)?.let { child.key!! to it }
                     }
                     .forEach(emitter::onNext)
                 emitter.onComplete()
@@ -40,12 +40,12 @@ inline fun <reified T : Any> DatabaseReference.getObservableValuesWithKey(): Obs
         })
     }
 
-inline fun <reified T : Any> DatabaseReference.observe(): Observable<T> {
+fun <T : Any> DatabaseReference.observe(cls: KClass<T>): Observable<T> {
     val subject = PublishSubject.create<T>()
     val listener = object : ChildEventListener {
 
         override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) =
-            snapshot.getValue<T>().let(subject::onNext)
+            snapshot.getValue(cls.java).let(subject::onNext)
 
         override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
 
