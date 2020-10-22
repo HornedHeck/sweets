@@ -4,9 +4,7 @@ import android.app.Activity
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.hornedheck.echos.base.BasePresenter
-import com.hornedheck.echos.data.models.User
-import com.hornedheck.echos.data.repo.MessagesRepo
-import com.hornedheck.echos.data.repo.UserRepo
+import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
@@ -16,8 +14,7 @@ import javax.inject.Inject
 @InjectViewState
 class LoginPresenter @Inject constructor(
     private val router: Router,
-    private val repo: UserRepo,
-    private val messagesRepo: MessagesRepo
+    private val repo: UserRepo
 ) : BasePresenter<LoginView>() {
 
     init {
@@ -51,13 +48,12 @@ class LoginPresenter @Inject constructor(
         }
     }
 
-    private fun login(user: User) {
+    private fun login(user: com.hornedheck.echos.domain.models.User) {
         FirebaseAuth.getInstance().currentUser?.getIdToken(false)
             ?.addOnSuccessListener {
                 user.token = it.token!!
                 repo.login(user).subscribe(
                     {
-                        messagesRepo.setToken(user.token)
                         router.newRootScreen(ContactsScreen())
                     },
                     { t ->
@@ -72,7 +68,7 @@ class LoginPresenter @Inject constructor(
             if (it) {
                 val email = FirebaseAuth.getInstance().currentUser!!.email!!
                 val link = "@${name.replace(" ", "")}"
-                login(User("", name, email, link))
+                login(com.hornedheck.echos.domain.models.User("", name, email, link))
             } else {
                 viewState.wrongName();
             }

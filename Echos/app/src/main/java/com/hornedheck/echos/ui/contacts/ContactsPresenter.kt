@@ -1,8 +1,7 @@
 package com.hornedheck.echos.ui.contacts
 
 import com.hornedheck.echos.base.BasePresenter
-import com.hornedheck.echos.data.models.ChannelInfo
-import com.hornedheck.echos.data.repo.MessagesRepo
+import com.hornedheck.echos.domain.interactors.ChannelsInteractor
 import com.hornedheck.echos.navigation.MessagesScreen
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -12,24 +11,26 @@ import javax.inject.Inject
 
 @InjectViewState
 class ContactsPresenter @Inject constructor(
-    private val repo: MessagesRepo,
+    private val interactor: ChannelsInteractor,
     private val router: Router
 ) : BasePresenter<ContactsView>() {
 
     private val disposable = CompositeDisposable()
 
     init {
-        disposable.add(
-            repo.observeContracts().subscribe(viewState::addContact, viewState::showError)
+        disposable.addAll(
+            interactor.observeChannels().subscribe(viewState::addContact, viewState::showError),
+            interactor.getChannels().subscribe(viewState::addContact, viewState::showError)
         )
     }
 
-    fun selectContact(info: ChannelInfo) {
+
+    fun selectContact(info: com.hornedheck.echos.domain.models.ChannelInfo) {
         router.navigateTo(MessagesScreen(info.id))
     }
 
     fun addContact(link: String) {
-        repo.addContact(link)
+        interactor.addContact(link)
             .subscribe({
                 Timber.d("Successful for $link")
             }, {

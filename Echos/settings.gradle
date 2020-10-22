@@ -1,3 +1,4 @@
+include ':domain'
 include ':fireRx3'
 include ':data'
 include ':app'

@@ -1,4 +1,4 @@
-package com.hornedheck.echos.data.models
+package com.hornedheck.echos.domain.models
 
 data class User(
     var token: String,

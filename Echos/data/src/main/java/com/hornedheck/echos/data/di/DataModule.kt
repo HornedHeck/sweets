@@ -4,10 +4,10 @@ import com.hornedheck.echos.data.api.MessagesApi
 import com.hornedheck.echos.data.api.MessagesApiImpl
 import com.hornedheck.echos.data.api.UserApi
 import com.hornedheck.echos.data.api.UserApiImpl
-import com.hornedheck.echos.data.repo.MessagesRepo
 import com.hornedheck.echos.data.repo.MessagesRepoImpl
-import com.hornedheck.echos.data.repo.UserRepo
 import com.hornedheck.echos.data.repo.UserRepoImpl
+import com.hornedheck.echos.domain.repo.ChannelsRepo
+import com.hornedheck.echos.domain.repo.UserRepo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -21,8 +21,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesMessagesRepository(api: MessagesApi, userApi: UserApi): MessagesRepo =
-        MessagesRepoImpl(api, userApi)
+    fun providesMessagesRepository(api: MessagesApi): ChannelsRepo = MessagesRepoImpl(api)
 
     @Provides
     @Singleton

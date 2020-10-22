@@ -1,0 +1,22 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+    id 'org.jetbrains.kotlin.kapt'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //  DI
+    api "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //  RX
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.1'
+}

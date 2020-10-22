@@ -2,7 +2,7 @@ package com.hornedheck.echos.data.api
 
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.hornedheck.echos.data.api.models.UserEntity
+import com.hornedheck.echos.data.models.UserEntity
 import com.hornedheck.firerx3.getObservableValues
 import com.hornedheck.firerx3.getObservableValuesWithKey
 import com.hornedheck.firerx3.getSingleValue
@@ -54,4 +54,6 @@ internal class UserApiImpl : UserApi {
             .filter { it.email == email }
             .firstElement()
 
+    override fun getUserById(id: String): Single<UserEntity> =
+        db.child(USERS).child(id).getSingleValue(UserEntity::class)
 }
