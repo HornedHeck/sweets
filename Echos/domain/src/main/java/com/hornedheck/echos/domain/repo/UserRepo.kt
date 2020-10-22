@@ -7,17 +7,16 @@ import io.reactivex.rxjava3.core.Single
 
 interface UserRepo {
 
-    var token: String
+    var id: String
 
-    fun login(user: User): Completable
+    fun login(user: User , new : Boolean): Completable
 
     fun checkName(name: String): Single<Boolean>
 
     fun isRegistered(email: String): Maybe<User>
 
-    fun getUser(): Single<User>
+    fun getUser(id : String = this.id): Single<User>
 
-    fun getUserById(id: String): Single<User>
 
     fun getUserByLink(link: String): Single<User>
 

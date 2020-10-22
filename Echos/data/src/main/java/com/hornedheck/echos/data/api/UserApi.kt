@@ -1,7 +1,6 @@
 package com.hornedheck.echos.data.api
 
 import com.hornedheck.echos.data.models.UserEntity
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
@@ -19,24 +18,23 @@ interface UserApi {
     fun checkName(name: String): Single<Boolean>
 
     /** Returns full user info
-     *  @param token User token
-     *  @return info about user (name, link, etc)
-     *  @see UserEntity
-     */
-    fun getUser(token: String): Single<UserEntity>
-
-    /** Returns full user info
      *  @param id User id
      *  @return info about user (name, link, etc)
      *  @see UserEntity
      */
     fun getUserById(id: String): Single<UserEntity>
 
-    /** Updates token for specified user
+    /** Login specified user
      *  @param user user info with new token
      *  @see UserEntity
      */
-    fun loginUser(user: UserEntity): Completable
+    fun loginUser(user: UserEntity): Single<UserEntity>
+
+    /** Register specified user
+     *  @param user user info with new token
+     *  @see UserEntity
+     */
+    fun registerUser(user : UserEntity) : Single<UserEntity>
 
     /** Tries to find user by link
      *  @param link link to user (@...)

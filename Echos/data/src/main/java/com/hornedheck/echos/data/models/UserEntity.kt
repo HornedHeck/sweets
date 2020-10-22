@@ -1,12 +1,14 @@
 package com.hornedheck.echos.data.models
 
+import com.hornedheck.echos.domain.models.User
+
 data class UserEntity(
-    var token: String = "",
+    var id: String = "",
     var name: String = "",
     var email: String = "",
     var link: String = ""
 )
 
-internal fun UserEntity.toUser() = com.hornedheck.echos.domain.models.User(token, name, email, link)
+internal fun UserEntity.toUser() = User(id, name, email, link)
 
-internal fun com.hornedheck.echos.domain.models.User.toEntity() = UserEntity(token, name, email, link)
+internal fun User.toEntity() = UserEntity(id, name, email, link)

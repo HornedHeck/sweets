@@ -17,14 +17,19 @@ internal class UserRepoImpl(
     private val api: UserApi
 ) : UserRepo {
 
-    override lateinit var token: String
+    override lateinit var id: String
 
-    override fun login(user: User): Completable {
-        this.token = user.token
-        return api.loginUser(user.toEntity())
+
+    override fun login(user: User, new: Boolean): Completable =
+        if (new) {
+            api.registerUser(user.toEntity())
+        } else {
+            api.loginUser(user.toEntity())
+        }
+            .doOnSuccess { id = it.id }
+            .ignoreElement()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-    }
 
     override fun checkName(name: String): Single<Boolean> =
         api.checkName(name)
@@ -36,13 +41,7 @@ internal class UserRepoImpl(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    override fun getUser(): Single<User> =
-        api.getUser(token)
-            .map(UserEntity::toUser)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-
-    override fun getUserById(id: String): Single<User> =
+    override fun getUser(id: String): Single<User> =
         api.getUserById(id)
             .map(UserEntity::toUser)
             .subscribeOn(Schedulers.io())
@@ -51,7 +50,7 @@ internal class UserRepoImpl(
     override fun getUserByLink(link: String): Single<User> =
         api.findUser(link)
             .map(UserEntity::toUser)
-            .timeout(5 , TimeUnit.SECONDS)
+            .timeout(5, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 

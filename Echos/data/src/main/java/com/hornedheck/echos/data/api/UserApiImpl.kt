@@ -6,7 +6,6 @@ import com.hornedheck.echos.data.models.UserEntity
 import com.hornedheck.firerx3.getObservableValues
 import com.hornedheck.firerx3.getObservableValuesWithKey
 import com.hornedheck.firerx3.getSingleValue
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 
@@ -14,29 +13,19 @@ internal class UserApiImpl : UserApi {
 
     private val db = Firebase.database.reference
 
-    private fun toUserId(token: String): Single<String> =
+    override fun loginUser(user: UserEntity): Single<UserEntity> =
         db.child(USERS).getObservableValuesWithKey(UserEntity::class)
-            .filter { (_, user) -> user.token == token }
+            .filter { (_, entity) -> entity.email == user.email }
             .firstOrError()
-            .map { (key, _) -> key }
+            .doOnSuccess { it.second.id = it.first }
+            .map { it.second }
 
-    override fun getUser(token: String): Single<UserEntity> =
-        toUserId(token).flatMap {
-            db.child(USERS).child(it).getSingleValue(UserEntity::class)
-        }
-
-    override fun loginUser(user: UserEntity): Completable =
-        db.child(USERS).getObservableValuesWithKey(UserEntity::class)
-            .filter { (_, entity) -> entity.email == entity.email }
-            .firstElement()
-            .doOnSuccess { (key, _) ->
-                db.child(USERS).child(key).child(TOKEN).setValue(user.token)
-            }
-            .doOnComplete {
-                db.child(USERS).push().setValue(user)
-            }
-            .ignoreElement()
-
+    override fun registerUser(user: UserEntity): Single<UserEntity> {
+        val push = db.child(USERS).push()
+        push.setValue(user)
+        user.id = push.key!!
+        return Single.just(user)
+    }
 
     override fun findUser(link: String): Single<UserEntity> =
         db.child(USERS).getObservableValues(UserEntity::class)

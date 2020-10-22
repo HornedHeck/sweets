@@ -6,10 +6,10 @@ import io.reactivex.rxjava3.core.Observable
 
 interface ChannelsRepo {
 
-    fun observeContracts(token: String): Observable<ChannelInfoPartial>
+    fun observeContracts(id: String): Observable<ChannelInfoPartial>
 
-    fun getContacts(token: String): Observable<ChannelInfoPartial>
+    fun getContacts(id: String): Observable<ChannelInfoPartial>
 
-    fun addContact(token1: String, token2: String): Completable
+    fun addContact(id1: String, id2: String): Completable
 
 }

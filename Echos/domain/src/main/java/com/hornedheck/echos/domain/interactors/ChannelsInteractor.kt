@@ -13,35 +13,31 @@ class ChannelsInteractor(
     private val channelsRepo: ChannelsRepo
 ) {
 
-    private val token
-        get() = userRepo.token
+    private val id
+        get() = userRepo.id
 
     private fun ChannelInfoPartial.toFullInfo(): Single<ChannelInfo> =
-        userRepo.getUserById(userId1).flatMap { u1 ->
-            userRepo.getUserById(userId2).map { u2 ->
-                if (u1.token == token) {
-                    ChannelInfo(channelId, u2)
-                } else {
-                    ChannelInfo(channelId, u1)
-                }
-            }
+        if (userId1 == id) {
+            userRepo.getUser(userId2).map { ChannelInfo(channelId, it) }
+        } else {
+            userRepo.getUser(userId1).map { ChannelInfo(channelId, it) }
         }
 
     fun getChannels(): Observable<ChannelInfo> =
-        channelsRepo.getContacts(token)
+        channelsRepo.getContacts(id)
             .flatMapSingle { it.toFullInfo() }
 
     fun observeChannels(): Observable<ChannelInfo> =
-        channelsRepo.observeContracts(token)
+        channelsRepo.observeContracts(id)
             .flatMapSingle { it.toFullInfo() }
 
     fun addContact(link: String): Completable =
         userRepo.getUserByLink(link)
             .flatMapCompletable {
-                if (it.token == token) {
+                if (it.id == id) {
                     Completable.error(Exception())
                 } else {
-                    channelsRepo.addContact(token, it.token)
+                    channelsRepo.addContact(id, it.id)
                 }
             }
 

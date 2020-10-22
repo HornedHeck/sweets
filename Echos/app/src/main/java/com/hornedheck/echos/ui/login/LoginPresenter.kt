@@ -4,17 +4,17 @@ import android.app.Activity
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.hornedheck.echos.base.BasePresenter
+import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
-import timber.log.Timber
 import javax.inject.Inject
 
 @InjectViewState
 class LoginPresenter @Inject constructor(
     private val router: Router,
-    private val repo: UserRepo
+    private val repo: UserRepo,
 ) : BasePresenter<LoginView>() {
 
     init {
@@ -34,7 +34,7 @@ class LoginPresenter @Inject constructor(
                 repo.isRegistered(email).subscribe(
                     { user ->
 //                      User is registered
-                        login(user)
+                        login(user , false)
                     },
                     viewState::showError,
                     {
@@ -48,19 +48,11 @@ class LoginPresenter @Inject constructor(
         }
     }
 
-    private fun login(user: com.hornedheck.echos.domain.models.User) {
-        FirebaseAuth.getInstance().currentUser?.getIdToken(false)
-            ?.addOnSuccessListener {
-                user.token = it.token!!
-                repo.login(user).subscribe(
-                    {
-                        router.newRootScreen(ContactsScreen())
-                    },
-                    { t ->
-                        Timber.e(t)
-                    }/*viewState::showError*/
-                )
-            }
+    private fun login(user: User, new: Boolean) {
+        repo.login(user, new).subscribe(
+            { router.newRootScreen(ContactsScreen()) },
+            viewState::showError
+        )
     }
 
     fun onNameSelected(name: String) {
@@ -68,7 +60,7 @@ class LoginPresenter @Inject constructor(
             if (it) {
                 val email = FirebaseAuth.getInstance().currentUser!!.email!!
                 val link = "@${name.replace(" ", "")}"
-                login(com.hornedheck.echos.domain.models.User("", name, email, link))
+                login(User("", name, email, link) , true)
             } else {
                 viewState.wrongName();
             }

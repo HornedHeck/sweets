@@ -14,21 +14,21 @@ internal class MessagesRepoImpl(
     private val api: MessagesApi,
 ) : ChannelsRepo {
 
-    override fun observeContracts(token: String): Observable<ChannelInfoPartial> =
-        api.observeChannels(token)
+    override fun observeContracts(id: String): Observable<ChannelInfoPartial> =
+        api.observeChannels(id)
             .flatMapSingle(api::getChannelInfo)
             .map(ChannelInfoEntity::toInfo)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    override fun addContact(token1: String, token2: String): Completable =
-        api.addChannel(token1, token2)
+    override fun addContact(id1: String, id2: String): Completable =
+        api.addChannel(id1, id2)
             .ignoreElement()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-    override fun getContacts(token: String): Observable<ChannelInfoPartial> =
-        api.getUserChannels(token)
+    override fun getContacts(id: String): Observable<ChannelInfoPartial> =
+        api.getUserChannels(id)
             .flatMapSingle(api::getChannelInfo)
             .map(ChannelInfoEntity::toInfo)
             .subscribeOn(Schedulers.io())

@@ -7,10 +7,10 @@ import io.reactivex.rxjava3.core.Single
 interface MessagesApi {
 
     /** Returns all channels for specified user
-     *  @param token User id
+     *  @param id User id
      *  @return channel Ids for user
      */
-    fun getUserChannels(token: String): Observable<String>
+    fun getUserChannels(id: String): Observable<String>
 
     /** Return full channel info for specified channel
      *  @param channelId Channel Id
@@ -34,10 +34,10 @@ interface MessagesApi {
 //    fun getMessages(channelId: String): Observable<MessageEntity>
 
     /** Observe add event on user channels and returns observable to it.
-     *  @param token User id
+     *  @param id User id
      *  @return channel ids
      */
-    fun observeChannels(token: String): Observable<String>
+    fun observeChannels(id: String): Observable<String>
 
 //    /** Checks fox existing channel between 2 users
 //     *  @param user1 token of first user
