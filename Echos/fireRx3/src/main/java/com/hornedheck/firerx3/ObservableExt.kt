@@ -55,6 +55,7 @@ fun <T : Any> DatabaseReference.observe(cls: KClass<T>): Observable<T> {
 
         override fun onCancelled(error: DatabaseError) = subject.onError(error.toException())
     }
+    addChildEventListener(listener)
     subject.doOnDispose { removeEventListener(listener) }
     return subject
 }

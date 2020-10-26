@@ -28,8 +28,12 @@ internal class UserApiImpl : UserApi {
     }
 
     override fun findUser(link: String): Single<UserEntity> =
-        db.child(USERS).getObservableValues(UserEntity::class)
-            .filter { it.link == link }
+        db.child(USERS).getObservableValuesWithKey(UserEntity::class)
+            .filter { it.second.link == link }
+            .map {
+                it.second.id = it.first
+                it.second
+            }
             .firstOrError()
 
     override fun checkName(name: String): Single<Boolean> =

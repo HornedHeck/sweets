@@ -17,7 +17,6 @@ interface UserRepo {
 
     fun getUser(id : String = this.id): Single<User>
 
-
     fun getUserByLink(link: String): Single<User>
 
 }
