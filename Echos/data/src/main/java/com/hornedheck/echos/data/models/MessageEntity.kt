@@ -1,10 +1,14 @@
 package com.hornedheck.echos.data.models
 
+import com.hornedheck.echos.domain.models.Message
+import java.time.Instant
+
 data class MessageEntity(
     var fromId: String = "",
-    var content: String = ""
+    var content: String = "",
+    var time : Long = 0L
 )
 
-fun com.hornedheck.echos.domain.models.Message.toEntity() = MessageEntity(fromId, content)
+fun Message.toEntity() = MessageEntity(fromId, content , time.toEpochMilli())
 
-fun MessageEntity.toMessage() = com.hornedheck.echos.domain.models.Message(fromId, content)
+fun MessageEntity.toMessage() = Message(fromId, content , Instant.ofEpochMilli(time))

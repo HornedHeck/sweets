@@ -9,7 +9,7 @@ import com.hornedheck.firerx3.observe
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-internal class MessagesApiImpl : MessagesApi {
+internal class ChannelsApiImpl : ChannelsApi {
 
     private val db = Firebase.database.reference
 

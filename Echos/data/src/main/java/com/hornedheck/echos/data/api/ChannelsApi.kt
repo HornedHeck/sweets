@@ -4,7 +4,7 @@ import com.hornedheck.echos.data.models.ChannelInfoEntity
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-interface MessagesApi {
+interface ChannelsApi {
 
     /** Returns all channels for specified user
      *  @param id User id

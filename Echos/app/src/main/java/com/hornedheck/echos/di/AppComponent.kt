@@ -5,6 +5,7 @@ import com.hornedheck.echos.domain.di.DomainModule
 import com.hornedheck.echos.ui.contacts.ContactsFragment
 import com.hornedheck.echos.ui.login.LoginFragment
 import com.hornedheck.echos.ui.main.MainActivity
+import com.hornedheck.echos.ui.messages.MessagesFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,5 +18,7 @@ interface AppComponent {
     fun inject(to: ContactsFragment)
 
     fun inject(to: LoginFragment)
+
+    fun inject(to : MessagesFragment)
 
 }

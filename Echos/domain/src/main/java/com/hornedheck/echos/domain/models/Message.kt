@@ -1,6 +1,9 @@
 package com.hornedheck.echos.domain.models
 
+import java.time.Instant
+
 data class Message(
-    val fromId: String,
-    val content : String
+    val isIncoming : Boolean,
+    val content : String,
+    val time : Instant
 )

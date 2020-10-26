@@ -94,4 +94,5 @@
     <string name="hint_link">Link</string>
     <string name="login_username_title">Enter username</string>
     <string name="login_username_error">Your username is occupied, try another please</string>
+    <string name="message_hint">Message</string>
 </resources>

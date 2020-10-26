@@ -19,8 +19,7 @@ class ContactsPresenter @Inject constructor(
 
     init {
         disposable.addAll(
-            interactor.observeChannels().subscribe(viewState::addContact, viewState::showError),
-//            interactor.getChannels().subscribe(viewState::addContact, viewState::showError)
+            interactor.observeChannels().subscribe(viewState::addItem, viewState::showError),
         )
     }
 

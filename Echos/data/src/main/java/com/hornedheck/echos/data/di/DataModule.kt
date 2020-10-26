@@ -1,12 +1,11 @@
 package com.hornedheck.echos.data.di
 
-import com.hornedheck.echos.data.api.MessagesApi
-import com.hornedheck.echos.data.api.MessagesApiImpl
-import com.hornedheck.echos.data.api.UserApi
-import com.hornedheck.echos.data.api.UserApiImpl
-import com.hornedheck.echos.data.repo.MessagesRepoImpl
+import com.hornedheck.echos.data.api.*
+import com.hornedheck.echos.data.repo.ChanelsRepoImpl
+import com.hornedheck.echos.data.repo.MessageRepoImpl
 import com.hornedheck.echos.data.repo.UserRepoImpl
 import com.hornedheck.echos.domain.repo.ChannelsRepo
+import com.hornedheck.echos.domain.repo.MessageRepo
 import com.hornedheck.echos.domain.repo.UserRepo
 import dagger.Module
 import dagger.Provides
@@ -17,11 +16,11 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesMessagesApi(): MessagesApi = MessagesApiImpl()
+    fun providesMessagesApi(): ChannelsApi = ChannelsApiImpl()
 
     @Provides
     @Singleton
-    fun providesMessagesRepository(api: MessagesApi): ChannelsRepo = MessagesRepoImpl(api)
+    fun providesMessagesRepository(api: ChannelsApi): ChannelsRepo = ChanelsRepoImpl(api)
 
     @Provides
     @Singleton
@@ -30,4 +29,13 @@ class DataModule {
     @Provides
     @Singleton
     fun providesUserRepo(api: UserApi): UserRepo = UserRepoImpl(api)
+
+    @Provides
+    @Singleton
+    fun providesMessageApi(): MessageApi = MessageApiImpl()
+
+    @Provides
+    @Singleton
+    fun providesMessageRepo(api: MessageApi): MessageRepo = MessageRepoImpl(api)
+
 }
