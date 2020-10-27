@@ -3,6 +3,7 @@ package com.hornedheck.echos.ui.messages
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hornedheck.echos.R
 import com.hornedheck.echos.appComponent
@@ -25,6 +26,12 @@ class MessagesFragment :
     @ProvidePresenter
     fun providePresenter() = presenter
 
+    override val layoutManager
+        get() = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            true
+        )
 
     override fun inject() {
         appComponent.inject(this)

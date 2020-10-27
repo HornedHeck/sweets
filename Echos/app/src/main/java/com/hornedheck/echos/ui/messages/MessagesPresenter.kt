@@ -19,6 +19,7 @@ class MessagesPresenter @Inject constructor(
         disposable.add(interactor.observeMessages(channelId).subscribe(
             viewState::addItem, viewState::showError
         ))
+        this.channelId = channelId
     }
 
     fun sendMessage(content: String) {

@@ -6,11 +6,9 @@
 
     <EditText
         android:id="@+id/etInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:importantForAutofill="no"
         android:inputType="text"
-        tools:ignore="LabelFor" />
+        tools:ignore="LabelFor"
+        style="@style/Message.Container" />
 
 </FrameLayout>

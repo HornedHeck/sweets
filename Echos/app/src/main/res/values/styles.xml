@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Message">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Message.Time">
+        <item name="android:layout_marginStart">@dimen/card_radius</item>
+        <item name="android:layout_marginEnd">@dimen/card_radius</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="Message.Card">
+        <item name="useCompatPadding">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+    </style>
+
+    <style name="Message.Content">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="Message.Container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+</resources>
