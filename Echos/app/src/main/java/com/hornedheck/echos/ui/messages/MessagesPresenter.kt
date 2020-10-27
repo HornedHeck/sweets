@@ -8,22 +8,21 @@ import java.time.Instant
 import javax.inject.Inject
 
 class MessagesPresenter @Inject constructor(
-    private val channelId: String,
     private val interactor: MessageInteractor,
 ) : BasePresenter<MessagesView>() {
 
-    private lateinit var me: String
-
     private val disposable = CompositeDisposable()
 
-    init {
+    private lateinit var channelId: String
+
+    fun init(channelId: String) {
         disposable.add(interactor.observeMessages(channelId).subscribe(
             viewState::addItem, viewState::showError
         ))
     }
 
     fun sendMessage(content: String) {
-        interactor.sendMessage(channelId, Message(me, content, Instant.now())).subscribe()
+        interactor.sendMessage(channelId, Message(false, content, Instant.now())).subscribe()
     }
 
 }

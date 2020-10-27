@@ -24,6 +24,12 @@ class DomainModule {
 
     @Provides
     @Singleton
-    fun providesMessageInteractor(messageRepo: MessageRepo) = MessageInteractor(messageRepo)
+    fun providesMessageInteractor(
+        messageRepo: MessageRepo,
+        userRepo: UserRepo,
+    ) = MessageInteractor(
+        messageRepo,
+        userRepo
+    )
 
 }

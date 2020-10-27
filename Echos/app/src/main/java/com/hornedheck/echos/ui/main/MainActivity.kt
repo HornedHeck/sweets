@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.auth.api.Auth
-import com.google.firebase.auth.FirebaseAuth
 import com.hornedheck.echos.R
 import com.hornedheck.echos.appComponent
 import com.hornedheck.echos.base.BaseActivity
@@ -58,6 +56,10 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        router.exit()
     }
 
 }

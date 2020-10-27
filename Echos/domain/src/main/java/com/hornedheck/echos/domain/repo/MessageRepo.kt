@@ -6,8 +6,8 @@ import io.reactivex.rxjava3.core.Observable
 
 interface MessageRepo {
 
-    fun observerMessages(channelId: String): Observable<Message>
+    fun observerMessages(channelId: String , me : String): Observable<Message>
 
-    fun addMessage(channelId: String , message: Message): Completable
+    fun addMessage(channelId: String , me : String , message: Message): Completable
 
 }

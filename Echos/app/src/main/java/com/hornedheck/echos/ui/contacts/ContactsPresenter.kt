@@ -2,6 +2,7 @@ package com.hornedheck.echos.ui.contacts
 
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.interactors.ChannelsInteractor
+import com.hornedheck.echos.domain.models.ChannelInfo
 import com.hornedheck.echos.navigation.MessagesScreen
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import moxy.InjectViewState
@@ -24,7 +25,7 @@ class ContactsPresenter @Inject constructor(
     }
 
 
-    fun selectContact(info: com.hornedheck.echos.domain.models.ChannelInfo) {
+    fun selectContact(info: ChannelInfo) {
         router.navigateTo(MessagesScreen(info.id))
     }
 
