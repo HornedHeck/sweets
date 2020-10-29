@@ -22,6 +22,11 @@ class MessagesPresenter @Inject constructor(
         this.channelId = channelId
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
+
     fun sendMessage(content: String) {
         interactor.sendMessage(channelId, Message(false, content, Instant.now())).subscribe()
     }

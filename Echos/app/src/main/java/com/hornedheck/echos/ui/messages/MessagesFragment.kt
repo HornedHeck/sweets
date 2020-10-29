@@ -23,19 +23,23 @@ class MessagesFragment :
     @InjectPresenter
     lateinit var presenter: MessagesPresenter
 
+    override val layoutManager by lazy {
+        LinearLayoutManager(requireContext()).apply {
+            stackFromEnd = true
+        }
+    }
+
     @ProvidePresenter
     fun providePresenter() = presenter
-
-    override val layoutManager
-        get() = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            true
-        )
 
     override fun inject() {
         appComponent.inject(this)
         presenter.init(requireArguments().getString(CHANNEL_ID_KEY)!!)
+    }
+
+    override fun addItem(item: Message) {
+        super.addItem(item)
+        rvMessages.scrollToPosition(adapter.itemCount - 1)
     }
 
     override lateinit var adapter: BaseAdapter<Message, MessageViewHolder>
@@ -51,6 +55,8 @@ class MessagesFragment :
             etContent.setText("")
         }
     }
+
+
 
     companion object {
 
