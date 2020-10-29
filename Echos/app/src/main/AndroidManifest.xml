@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Echos">
         <activity
+            android:name=".ui.NavActivity"
+            android:label="@string/title_activity_nav"
+            android:theme="@style/Theme.Echos.NoActionBar"></activity>
+        <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

@@ -49,7 +49,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId == R.id.menu_logout) {
-//            FirebaseAuth.getInstance().signOut()
             AuthUI.getInstance().signOut(this)
             router.newRootScreen(LoginScreen())
             return true

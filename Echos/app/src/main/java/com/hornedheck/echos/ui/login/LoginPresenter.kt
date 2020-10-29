@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.domain.repo.UserRepo
-import com.hornedheck.echos.navigation.ContactsScreen
+import com.hornedheck.echos.navigation.NavigationHostScreen
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class LoginPresenter @Inject constructor(
                 repo.isRegistered(email).subscribe(
                     { user ->
 //                      User is registered
-                        login(user , false)
+                        login(user, false)
                     },
                     viewState::showError,
                     {
@@ -50,7 +50,7 @@ class LoginPresenter @Inject constructor(
 
     private fun login(user: User, new: Boolean) {
         repo.login(user, new).subscribe(
-            { router.newRootScreen(ContactsScreen()) },
+            { router.newRootScreen(NavigationHostScreen()) },
             viewState::showError
         )
     }
@@ -60,7 +60,7 @@ class LoginPresenter @Inject constructor(
             if (it) {
                 val email = FirebaseAuth.getInstance().currentUser!!.email!!
                 val link = "@${name.replace(" ", "")}"
-                login(User("", name, email, link) , true)
+                login(User("", name, email, link), true)
             } else {
                 viewState.wrongName();
             }
