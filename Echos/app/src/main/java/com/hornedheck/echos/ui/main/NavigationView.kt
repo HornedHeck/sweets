@@ -1,4 +1,4 @@
-package com.hornedheck.echos.ui.navigation
+package com.hornedheck.echos.ui.main
 
 import com.hornedheck.echos.base.BaseView
 import com.hornedheck.echos.domain.models.User

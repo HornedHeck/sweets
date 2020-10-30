@@ -21,7 +21,7 @@ class ContactsFragment : ListFragment<ChannelInfo, ContactViewHolder>(R.layout.f
     lateinit var presenter: ContactsPresenter
 
     @ProvidePresenter
-    fun providePresenter() = presenter
+    fun provide() = presenter
 
     override lateinit var adapter: BaseAdapter<ChannelInfo, ContactViewHolder>
 
@@ -43,7 +43,7 @@ class ContactsFragment : ListFragment<ChannelInfo, ContactViewHolder>(R.layout.f
     }
 
     override fun inject() {
-        localFlowComponent?.inject(this)
+       appComponent.inject(this)
     }
 
 }

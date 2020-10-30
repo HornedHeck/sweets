@@ -3,6 +3,7 @@ package com.hornedheck.echos.di
 import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Cicerone
+import javax.inject.Singleton
 
 @Module
 class NavigationModule {
@@ -10,11 +11,11 @@ class NavigationModule {
     private val cicerone = Cicerone.create()
 
     @Provides
-    @FlowScope
+    @Singleton
     fun providesRouter() = cicerone.router
 
     @Provides
-    @FlowScope
+    @Singleton
     fun provideNavHolder() = cicerone.navigatorHolder
 
 }

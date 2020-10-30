@@ -10,8 +10,8 @@ import timber.log.Timber
 abstract class BaseActivity(@LayoutRes private val layoutRes: Int = 0) : MvpAppCompatActivity(),
     BaseView {
 
-    protected val globalFlowComponent
-        get() = (application as EchosApp).globalFlowComponent
+    protected val appComponent
+        get() = (application as EchosApp).appComponent
 
     abstract fun inject()
 

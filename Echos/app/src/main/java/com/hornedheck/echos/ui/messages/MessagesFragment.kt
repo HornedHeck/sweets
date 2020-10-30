@@ -32,7 +32,7 @@ class MessagesFragment :
     fun providePresenter() = presenter
 
     override fun inject() {
-        localFlowComponent?.inject(this)
+        appComponent.inject(this)
         presenter.init(requireArguments().getString(CHANNEL_ID_KEY)!!)
     }
 
@@ -55,8 +55,6 @@ class MessagesFragment :
         }
     }
 
-
-
     companion object {
 
         private const val CHANNEL_ID_KEY = "channel_id"
@@ -66,5 +64,4 @@ class MessagesFragment :
                 arguments = bundleOf(CHANNEL_ID_KEY to channelId)
             }
     }
-
 }

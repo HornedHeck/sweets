@@ -1,29 +1,28 @@
-package com.hornedheck.echos.ui.navigation
+package com.hornedheck.echos.ui.main
 
+import android.content.Context
+import com.firebase.ui.auth.AuthUI
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
+import com.hornedheck.echos.navigation.LoginScreen
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class NavigationPresenter @Inject constructor(
     private val router: Router,
-    userRepo: UserRepo,
+    private val userRepo: UserRepo,
 ) : BasePresenter<NavigationView>() {
 
-    private var lastNav = 0
-
-    init {
+    fun getUserInfo() {
         userRepo.getUser().subscribe(viewState::setUserInfo, viewState::showError)
     }
 
-    fun navigate(to: Int): Boolean {
-        if (to == lastNav) return true
+    fun navigate(to: Int, context: Context): Boolean {
         return when (to) {
             R.id.menu_contacts -> {
                 router.replaceScreen(ContactsScreen())
-                lastNav = to
                 true
             }
             R.id.menu_settings -> {
@@ -31,8 +30,9 @@ class NavigationPresenter @Inject constructor(
                 false
             }
             R.id.menu_logout -> {
-                viewState.showError("Not implemented", "Not implemented")
-                false
+                AuthUI.getInstance().signOut(context)
+                router.newRootScreen(LoginScreen())
+                true
             }
             else -> false
         }

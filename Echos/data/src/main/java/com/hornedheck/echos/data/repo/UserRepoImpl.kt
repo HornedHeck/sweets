@@ -19,7 +19,6 @@ internal class UserRepoImpl(
 
     override lateinit var id: String
 
-
     override fun login(user: User, new: Boolean): Completable =
         if (new) {
             api.registerUser(user.toEntity())

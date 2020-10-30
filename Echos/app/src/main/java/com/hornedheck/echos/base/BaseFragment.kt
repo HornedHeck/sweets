@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import com.hornedheck.echos.EchosApp
-import com.hornedheck.echos.di.LocalFlowComponent
 import moxy.MvpAppCompatFragment
 import timber.log.Timber
 
@@ -17,12 +16,6 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
 
     protected val appComponent
         get() = (requireActivity().application as EchosApp).appComponent
-
-    protected val globalFlowComponent
-        get() = (requireActivity().application as EchosApp).globalFlowComponent
-
-    protected open val localFlowComponent: LocalFlowComponent?
-        get() = (parentFragment as? BaseFragment?)?.localFlowComponent
 
     abstract fun inject()
 
@@ -49,6 +42,5 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
 
     override fun showError(e: Throwable) {
         Timber.e(e)
-//        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
     }
 }
