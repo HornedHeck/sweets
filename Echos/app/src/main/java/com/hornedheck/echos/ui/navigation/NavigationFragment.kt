@@ -6,13 +6,17 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BaseFragment
+import com.hornedheck.echos.di.LocalFlowComponent
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_navigation.*
 
 class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 
-    override fun inject() {
+    override val localFlowComponent: LocalFlowComponent
+        get() = appComponent.getLocalFlowComponent()
 
+    override fun inject() {
+        localFlowComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +32,6 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
-
     }
 
 }

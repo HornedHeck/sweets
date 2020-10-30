@@ -9,10 +9,9 @@ import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.NavigationHostScreen
 import moxy.InjectViewState
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
 @InjectViewState
-class LoginPresenter @Inject constructor(
+class LoginPresenter(
     private val router: Router,
     private val repo: UserRepo,
 ) : BasePresenter<LoginView>() {

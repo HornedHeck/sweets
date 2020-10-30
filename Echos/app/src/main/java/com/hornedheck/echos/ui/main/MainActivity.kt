@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import com.firebase.ui.auth.AuthUI
 import com.hornedheck.echos.R
-import com.hornedheck.echos.appComponent
 import com.hornedheck.echos.base.BaseActivity
 import com.hornedheck.echos.navigation.EchosNavigator
 import com.hornedheck.echos.navigation.LoginScreen
@@ -28,7 +27,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     override fun inject() {
-        appComponent.inject(this)
+        globalFlowComponent.inject(this)
     }
 
     override fun onResumeFragments() {

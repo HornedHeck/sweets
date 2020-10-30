@@ -3,11 +3,15 @@ package com.hornedheck.echos.base
 import android.os.Bundle
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import com.hornedheck.echos.EchosApp
 import moxy.MvpAppCompatActivity
 import timber.log.Timber
 
 abstract class BaseActivity(@LayoutRes private val layoutRes: Int = 0) : MvpAppCompatActivity(),
     BaseView {
+
+    protected val globalFlowComponent
+        get() = (application as EchosApp).globalFlowComponent
 
     abstract fun inject()
 

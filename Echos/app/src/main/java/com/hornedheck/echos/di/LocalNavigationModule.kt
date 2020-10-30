@@ -3,9 +3,10 @@ package com.hornedheck.echos.di
 import dagger.Module
 import dagger.Provides
 import ru.terrakok.cicerone.Cicerone
+import javax.inject.Singleton
 
 @Module
-class NavigationModule {
+class LocalNavigationModule {
 
     private val cicerone = Cicerone.create()
 
@@ -18,5 +19,3 @@ class NavigationModule {
     fun provideNavHolder() = cicerone.navigatorHolder
 
 }
-
-

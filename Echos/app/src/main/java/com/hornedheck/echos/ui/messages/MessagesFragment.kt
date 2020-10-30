@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hornedheck.echos.R
-import com.hornedheck.echos.appComponent
 import com.hornedheck.echos.base.list.BaseAdapter
 import com.hornedheck.echos.base.list.ListFragment
 import com.hornedheck.echos.domain.models.Message
@@ -33,7 +32,7 @@ class MessagesFragment :
     fun providePresenter() = presenter
 
     override fun inject() {
-        appComponent.inject(this)
+        localFlowComponent?.inject(this)
         presenter.init(requireArguments().getString(CHANNEL_ID_KEY)!!)
     }
 

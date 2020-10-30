@@ -4,7 +4,6 @@ import android.content.Intent
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.hornedheck.echos.R
-import com.hornedheck.echos.appComponent
 import com.hornedheck.echos.base.BaseFragment
 import com.hornedheck.echos.utils.textInputDialog
 import moxy.presenter.InjectPresenter
@@ -46,7 +45,7 @@ class LoginFragment : BaseFragment(), LoginView {
     }
 
     override fun inject() {
-        appComponent.inject(this)
+        globalFlowComponent.loginComponent().inject(this)
     }
 
     override fun getName() {
