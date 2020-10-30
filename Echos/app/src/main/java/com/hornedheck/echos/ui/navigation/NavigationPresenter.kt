@@ -2,15 +2,21 @@ package com.hornedheck.echos.ui.navigation
 
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BasePresenter
+import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class NavigationPresenter @Inject constructor(
     private val router: Router,
+    userRepo: UserRepo,
 ) : BasePresenter<NavigationView>() {
 
     private var lastNav = 0
+
+    init {
+        userRepo.getUser().subscribe(viewState::setUserInfo, viewState::showError)
+    }
 
     fun navigate(to: Int): Boolean {
         if (to == lastNav) return true

@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BaseFragment
 import com.hornedheck.echos.di.LocalFlowComponent
+import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.navigation.EchosNavigator
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_navigation.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import ru.terrakok.cicerone.NavigatorHolder
@@ -78,4 +80,8 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
         presenter.navigate(R.id.menu_contacts)
     }
 
+    override fun setUserInfo(user: User) {
+        tvName.text = user.name
+        tvLink.text = user.link
+    }
 }
