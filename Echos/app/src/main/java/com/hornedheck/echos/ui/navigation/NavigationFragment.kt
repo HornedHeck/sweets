@@ -6,16 +6,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BaseFragment
-import com.hornedheck.echos.di.LocalFlowComponent
 import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.navigation.EchosNavigator
+import com.hornedheck.echos.navigation.LocalNavigation
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_navigation.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class NavigationFragment : BaseFragment(R.layout.fragment_navigation), NavigationView {
@@ -28,10 +26,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
     fun provide() = presenter
 
     @Inject
-    lateinit var router: Router
-
-    @Inject
-    lateinit var navHolder: NavigatorHolder
+    lateinit var navigation: LocalNavigation
 
     private val navigator by lazy {
         EchosNavigator(
@@ -41,21 +36,21 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
         )
     }
 
-    override val localFlowComponent: LocalFlowComponent
-        get() = appComponent.getLocalFlowComponent()
+    override val flowComponent by lazy { appComponent.getLocalFlowComponent() }
 
     override fun inject() {
-        localFlowComponent.inject(this)
+        flowComponent.inject(this)
+        presenter.getUserInfo()
     }
 
     override fun onResume() {
         super.onResume()
-        navHolder.setNavigator(navigator)
+        navigation.navHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        navHolder.removeNavigator()
+        navigation.navHolder.removeNavigator()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,11 +58,13 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
         with(requireActivity() as AppCompatActivity) {
             setSupportActionBar(toolbar)
         }
-        val toggle = ActionBarDrawerToggle(requireActivity(),
+        val toggle = ActionBarDrawerToggle(
+            requireActivity(),
             drawerLayout,
             toolbar,
             R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close)
+            R.string.navigation_drawer_close
+        )
 
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
@@ -81,7 +78,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
     }
 
     override fun setUserInfo(user: User) {
-        tvName.text = user.name
-        tvLink.text = user.link
+        tvName?.text = user.name
+        tvLink?.text = user.link
     }
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import com.hornedheck.echos.EchosApp
-import com.hornedheck.echos.di.LocalFlowComponent
+import com.hornedheck.echos.di.FlowNavigationComponent
 import moxy.MvpAppCompatFragment
 import timber.log.Timber
 
@@ -18,11 +18,8 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = 0) :
     protected val appComponent
         get() = (requireActivity().application as EchosApp).appComponent
 
-    protected val globalFlowComponent
-        get() = (requireActivity().application as EchosApp).globalFlowComponent
-
-    protected open val localFlowComponent: LocalFlowComponent?
-        get() = (parentFragment as? BaseFragment?)?.localFlowComponent
+    protected open val flowComponent: FlowNavigationComponent?
+        get() = (parentFragment as? BaseFragment?)?.flowComponent
 
     abstract fun inject()
 

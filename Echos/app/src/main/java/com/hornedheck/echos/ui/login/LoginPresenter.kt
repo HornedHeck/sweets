@@ -6,13 +6,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.domain.repo.UserRepo
+import com.hornedheck.echos.navigation.GlobalNavigation
 import com.hornedheck.echos.navigation.NavigationHostScreen
 import moxy.InjectViewState
-import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 @InjectViewState
-class LoginPresenter(
-    private val router: Router,
+class LoginPresenter @Inject constructor(
+    private val navigation: GlobalNavigation,
     private val repo: UserRepo,
 ) : BasePresenter<LoginView>() {
 
@@ -49,7 +50,7 @@ class LoginPresenter(
 
     private fun login(user: User, new: Boolean) {
         repo.login(user, new).subscribe(
-            { router.newRootScreen(NavigationHostScreen()) },
+            { navigation.router.newRootScreen(NavigationHostScreen()) },
             viewState::showError
         )
     }
@@ -61,7 +62,7 @@ class LoginPresenter(
                 val link = "@${name.replace(" ", "")}"
                 login(User("", name, email, link), true)
             } else {
-                viewState.wrongName();
+                viewState.wrongName()
             }
         }, viewState::showError)
     }

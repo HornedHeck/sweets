@@ -4,17 +4,19 @@ import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.ContactsScreen
-import ru.terrakok.cicerone.Router
+import com.hornedheck.echos.navigation.GlobalNavigation
+import com.hornedheck.echos.navigation.LocalNavigation
 import javax.inject.Inject
 
 class NavigationPresenter @Inject constructor(
-    private val router: Router,
-    userRepo: UserRepo,
+    private val navigation: LocalNavigation,
+    private val globalNavigation: GlobalNavigation,
+    private val userRepo: UserRepo,
 ) : BasePresenter<NavigationView>() {
 
     private var lastNav = 0
 
-    init {
+    fun getUserInfo() {
         userRepo.getUser().subscribe(viewState::setUserInfo, viewState::showError)
     }
 
@@ -22,7 +24,7 @@ class NavigationPresenter @Inject constructor(
         if (to == lastNav) return true
         return when (to) {
             R.id.menu_contacts -> {
-                router.replaceScreen(ContactsScreen())
+                navigation.router.replaceScreen(ContactsScreen())
                 lastNav = to
                 true
             }

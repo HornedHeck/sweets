@@ -43,7 +43,7 @@ class ContactsFragment : ListFragment<ChannelInfo, ContactViewHolder>(R.layout.f
     }
 
     override fun inject() {
-        localFlowComponent?.inject(this)
+        flowComponent?.inject(this)
     }
 
 }

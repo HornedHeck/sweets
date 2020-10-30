@@ -45,7 +45,7 @@ class LoginFragment : BaseFragment(), LoginView {
     }
 
     override fun inject() {
-        globalFlowComponent.loginComponent().inject(this)
+        appComponent.inject(this)
     }
 
     override fun getName() {

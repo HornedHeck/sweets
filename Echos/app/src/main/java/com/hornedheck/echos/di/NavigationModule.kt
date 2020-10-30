@@ -1,21 +1,18 @@
 package com.hornedheck.echos.di
 
+import com.hornedheck.echos.navigation.GlobalNavigation
 import dagger.Module
 import dagger.Provides
-import ru.terrakok.cicerone.Cicerone
+import javax.inject.Singleton
 
 @Module
 class NavigationModule {
 
-    private val cicerone = Cicerone.create()
+    private val navigation = GlobalNavigation()
 
     @Provides
-    @FlowScope
-    fun providesRouter() = cicerone.router
-
-    @Provides
-    @FlowScope
-    fun provideNavHolder() = cicerone.navigatorHolder
+    @Singleton
+    fun navigation() = navigation
 
 }
 

@@ -7,37 +7,34 @@ import com.firebase.ui.auth.AuthUI
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BaseActivity
 import com.hornedheck.echos.navigation.EchosNavigator
+import com.hornedheck.echos.navigation.GlobalNavigation
 import com.hornedheck.echos.navigation.LoginScreen
-import ru.terrakok.cicerone.NavigatorHolder
-import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
-    @Inject
-    lateinit var router: Router
 
     @Inject
-    lateinit var navHolder: NavigatorHolder
+    lateinit var navigation: GlobalNavigation
 
     private val navigator = EchosNavigator(this, R.id.flRootContainer)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        router.newRootScreen(LoginScreen())
+        navigation.router.newRootScreen(LoginScreen())
     }
 
     override fun inject() {
-        globalFlowComponent.inject(this)
+        appComponent.inject(this)
     }
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        navHolder.setNavigator(navigator)
+        navigation.navHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        navHolder.removeNavigator()
+        navigation.navHolder.removeNavigator()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -49,7 +46,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
         if (item.itemId == R.id.menu_logout) {
             AuthUI.getInstance().signOut(this)
-            router.newRootScreen(LoginScreen())
+            navigation.router.newRootScreen(LoginScreen())
             return true
         }
 
@@ -57,7 +54,7 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     }
 
     override fun onBackPressed() {
-        router.exit()
+        navigation.router.exit()
     }
 
 }

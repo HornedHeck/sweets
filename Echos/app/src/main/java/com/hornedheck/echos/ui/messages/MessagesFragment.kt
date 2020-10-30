@@ -1,7 +1,9 @@
 package com.hornedheck.echos.ui.messages
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,11 +30,22 @@ class MessagesFragment :
         }
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == android.R.id.home) {
+            presenter.back()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
     @ProvidePresenter
     fun providePresenter() = presenter
 
     override fun inject() {
-        localFlowComponent?.inject(this)
+        appComponent.inject(this)
         presenter.init(requireArguments().getString(CHANNEL_ID_KEY)!!)
     }
 
@@ -49,13 +62,18 @@ class MessagesFragment :
         adapter = MessageAdapter()
         super.onViewCreated(view, savedInstanceState)
 
+        with((requireActivity() as AppCompatActivity)) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        toolbar.setNavigationOnClickListener { presenter.back() }
+
+
         btnSend.setOnClickListener {
             presenter.sendMessage(etContent.text.toString())
             etContent.setText("")
         }
     }
-
-
 
     companion object {
 
