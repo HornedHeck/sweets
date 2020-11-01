@@ -69,12 +69,12 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
         navView.setNavigationItemSelectedListener { item ->
-            presenter.navigate(item.itemId).also {
+            presenter.navigate(item.itemId, requireContext()).also {
                 if (it) drawerLayout.closeDrawers()
             }
         }
         navView.setCheckedItem(R.id.menu_contacts)
-        presenter.navigate(R.id.menu_contacts)
+        presenter.navigate(R.id.menu_contacts, requireContext())
     }
 
     override fun setUserInfo(user: User) {

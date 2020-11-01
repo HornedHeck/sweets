@@ -7,7 +7,7 @@ import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.models.User
 import com.hornedheck.echos.domain.repo.UserRepo
 import com.hornedheck.echos.navigation.GlobalNavigation
-import com.hornedheck.echos.navigation.NavigationHostScreen
+import com.hornedheck.echos.navigation.MainScreen
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -50,7 +50,7 @@ class LoginPresenter @Inject constructor(
 
     private fun login(user: User, new: Boolean) {
         repo.login(user, new).subscribe(
-            { navigation.router.newRootScreen(NavigationHostScreen()) },
+            { navigation.router.newRootScreen(MainScreen()) },
             viewState::showError
         )
     }
