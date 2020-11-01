@@ -1,5 +1,6 @@
 package com.hornedheck.echos.di
 
+import com.hornedheck.echos.EchosApp
 import com.hornedheck.echos.data.di.DataModule
 import com.hornedheck.echos.domain.di.DomainModule
 import com.hornedheck.echos.ui.login.LoginActivity
@@ -19,5 +20,7 @@ interface AppComponent {
     fun inject(to: MessagesFragment)
 
     fun inject(to: LoginActivity)
+
+    fun inject(to: EchosApp)
 
 }

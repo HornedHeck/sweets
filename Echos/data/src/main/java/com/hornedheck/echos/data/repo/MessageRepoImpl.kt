@@ -12,11 +12,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 internal class MessageRepoImpl(private val messageApi: MessageApi) : MessageRepo {
 
-    override fun observerMessages(channelId: String, me: String): Observable<Message> =
-        messageApi.observeMessage(channelId)
+    override fun observerMessages(channelId: String, me: String): Observable<Message> {
+        messageApi.readMessages(channelId, me)
+        return messageApi.observeMessage(channelId)
             .map { it.toMessage(me) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
 
     override fun addMessage(channelId: String, me: String, message: Message): Completable {
         return messageApi.sendMessage(channelId, message.toEntity(me))

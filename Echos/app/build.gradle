@@ -17,6 +17,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "NOTIFICATION_CHANNEL", '"ehcos_channel"'
+        buildConfigField "int" , "NOTIFICATION_ID" , "24111"
+        buildConfigField "String" , "WORK_TAG" , '"echos_work"'
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,6 +28,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "int" , "WORK_DELAY" , '1'
+        }
+        debug{
+            buildConfigField "int" , "WORK_DELAY" , '0'
         }
     }
     compileOptions {
@@ -42,17 +50,18 @@ androidExtensions {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation project(path: ':data')
     implementation project(path: ':domain')
-    implementation 'androidx.navigation:navigation-fragment:2.2.2'
-    implementation 'androidx.navigation:navigation-ui:2.2.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
-    implementation 'androidx.preference:preference:1.1.1'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+
+//  Work API
+    def work_version = "2.4.0"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-rxjava3:$work_version"
+
 
 //  Support & KTX
     implementation 'androidx.core:core-ktx:1.3.2'
@@ -60,7 +69,7 @@ dependencies {
 
 //  Views
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
 
 //  RX
     implementation 'io.reactivex.rxjava3:rxjava:3.0.6'

@@ -3,6 +3,7 @@ package com.hornedheck.echos.data.api
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hornedheck.echos.data.models.ChannelInfoEntity
+import com.hornedheck.echos.data.models.MessageEntity
 import com.hornedheck.firerx3.getObservableValues
 import com.hornedheck.firerx3.getSingleValue
 import com.hornedheck.firerx3.observe
@@ -43,5 +44,12 @@ internal class ChannelsApiImpl : ChannelsApi {
 //                .all { it.u1 != id && it.u2 != id }
 //        }
 
-
+    override fun getUnreadCount(channelId: String, to: String): Single<Int> =
+        db.child(CHANNELS).child(channelId).child(MESSAGES)
+            .getObservableValues(MessageEntity::class)
+            .filter {
+                !it.isRead && it.fromId != to
+            }
+            .count()
+            .map { it?.toInt() ?: 0 }
 }

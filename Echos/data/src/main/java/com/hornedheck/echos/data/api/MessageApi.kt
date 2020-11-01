@@ -10,4 +10,6 @@ interface MessageApi {
 
     fun sendMessage(channelId: String, entity: MessageEntity): Completable
 
+    fun readMessages(channelId: String, me: String)
+
 }

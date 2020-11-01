@@ -1,11 +1,16 @@
 package com.hornedheck.echos.ui.main
 
 import android.os.Bundle
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.hornedheck.echos.BuildConfig
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BaseActivity
+import com.hornedheck.echos.messages.NewMessagesWorker
 import com.hornedheck.echos.navigation.EchosNavigator
 import com.hornedheck.echos.navigation.GlobalNavigation
 import com.hornedheck.echos.navigation.NavigationHostScreen
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(R.layout.activity_main) {
@@ -36,6 +41,22 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     override fun onBackPressed() {
         navigation.router.exit()
+    }
+
+    override fun onStart() {
+        WorkManager.getInstance(this)
+            .cancelAllWorkByTag(BuildConfig.WORK_TAG)
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val request = PeriodicWorkRequestBuilder<NewMessagesWorker>(15, TimeUnit.MINUTES)
+            .addTag(BuildConfig.WORK_TAG)
+            .setInitialDelay(BuildConfig.WORK_DELAY.toLong(), TimeUnit.MINUTES)
+            .build()
+
+        WorkManager.getInstance(this).enqueue(request)
     }
 
 }

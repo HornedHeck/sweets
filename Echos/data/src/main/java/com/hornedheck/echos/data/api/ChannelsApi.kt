@@ -46,4 +46,12 @@ interface ChannelsApi {
 //     */
 //    fun checkChannel(user1: String, user2: String): Single<Boolean>
 
+    /** Returns count of unread messages to specified user in channel
+     *  @param channelId channelId
+     *  @param to user id
+     *  @return unread messages count
+     */
+    fun getUnreadCount(channelId: String, to: String): Single<Int>
+
+
 }

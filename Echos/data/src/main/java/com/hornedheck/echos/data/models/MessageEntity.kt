@@ -7,6 +7,7 @@ data class MessageEntity(
     var fromId: String = "",
     var content: String = "",
     var time: Long = 0L,
+    var isRead: Boolean = false
 )
 
 fun Message.toEntity(sender: String) = MessageEntity(sender, content, time.toEpochMilli())

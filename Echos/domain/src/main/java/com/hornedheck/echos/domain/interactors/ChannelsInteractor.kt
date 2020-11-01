@@ -41,4 +41,10 @@ class ChannelsInteractor(
                 }
             }
 
+    /** First - unread, second - channels */
+    fun getUnreadCount(): Single<Pair<Int, Int>> =
+        channelsRepo.getContacts(id)
+            .flatMapSingle { channelsRepo.getUnread(it.channelId, id) }
+            .toList()
+            .map { it.sum() to it.size }
 }
