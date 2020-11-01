@@ -51,7 +51,8 @@ class MessagesPresenter @Inject constructor(
 
     fun sendMessage(content: String) {
         if (content.isBlank()) return
-        interactor.sendMessage(channelId, Message("", false, content, Instant.now())).subscribe()
+        interactor.sendMessage(channelId, Message("", false, content.trim(), Instant.now()))
+            .subscribe()
     }
 
     fun back() {
