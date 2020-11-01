@@ -13,4 +13,11 @@ class MessageInteractor(
 
     fun sendMessage(channelId: String, message: Message) =
         messageRepo.addMessage(channelId, userRepo.id, message)
+
+    fun deleteMessage(message: Message, channelId: String) =
+        messageRepo.deleteMessage(channelId, userRepo.id, message)
+
+    fun updateMessage(message: Message, channelId: String) =
+        messageRepo.updateMessage(channelId, userRepo.id, message)
+
 }

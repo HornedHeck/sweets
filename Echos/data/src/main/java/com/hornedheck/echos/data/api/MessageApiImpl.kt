@@ -48,4 +48,20 @@ class MessageApiImpl : MessageApi {
         })
     }
 
+    override fun deleteMessage(channelId: String, entity: MessageEntity): Completable {
+        return Completable.create {
+            db.child(CHANNELS).child(channelId).child(MESSAGES).child(entity.id)
+                .setValue(null)
+                .addOnCompleteListener { _ -> it.onComplete() }
+                .addOnFailureListener(it::onError)
+        }
+    }
+
+    override fun updateMessage(channelId: String, entity: MessageEntity): Completable {
+        return Completable.create {
+            db.child(CHANNELS).child(channelId).child(MESSAGES).child(entity.id).setValue(entity)
+            it.onComplete()
+        }
+    }
+
 }

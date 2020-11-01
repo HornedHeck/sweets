@@ -31,4 +31,17 @@ internal class MessageRepoImpl(private val messageApi: MessageApi) : MessageRepo
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override fun deleteMessage(channelId: String, me: String, message: Message): Completable {
+        return messageApi.deleteMessage(channelId, message.toEntity(me))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun updateMessage(channelId: String, me: String, message: Message): Completable {
+        return messageApi.updateMessage(channelId, message.toEntity(me))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
 }

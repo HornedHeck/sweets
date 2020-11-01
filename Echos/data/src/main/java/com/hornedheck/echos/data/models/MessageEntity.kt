@@ -12,9 +12,10 @@ data class MessageEntity(
 )
 
 fun Message.toEntity(sender: String) = MessageEntity(
+    id = id,
     fromId = sender,
     content = content,
-    time = time.toEpochMilli()
+    time = Instant.now().toEpochMilli()
 )
 
 fun MessageEntity.toMessage(me: String) = Message(

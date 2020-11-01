@@ -13,4 +13,8 @@ interface MessageApi {
 
     fun readMessages(channelId: String, me: String)
 
+    fun deleteMessage(channelId: String, entity: MessageEntity): Completable
+
+    fun updateMessage(channelId: String, entity: MessageEntity): Completable
+
 }

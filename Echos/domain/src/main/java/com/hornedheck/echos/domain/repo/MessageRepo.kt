@@ -9,6 +9,10 @@ interface MessageRepo {
 
     fun observerMessages(channelId: String, me: String): Observable<Action<Message>>
 
-    fun addMessage(channelId: String , me : String , message: Message): Completable
+    fun addMessage(channelId: String, me: String, message: Message): Completable
+
+    fun deleteMessage(channelId: String, me: String, message: Message): Completable
+
+    fun updateMessage(channelId: String, me: String, message: Message): Completable
 
 }

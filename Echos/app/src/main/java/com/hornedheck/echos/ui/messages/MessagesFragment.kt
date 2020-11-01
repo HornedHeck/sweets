@@ -1,8 +1,11 @@
 package com.hornedheck.echos.ui.messages
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +15,7 @@ import com.hornedheck.echos.base.list.BaseAdapter
 import com.hornedheck.echos.base.list.ListFragment
 import com.hornedheck.echos.domain.models.Message
 import kotlinx.android.synthetic.main.fragment_messages.*
+import kotlinx.android.synthetic.main.layout_message_actions.view.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -59,7 +63,7 @@ class MessagesFragment :
         get() = rvMessages
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = MessageAdapter()
+        adapter = MessageAdapter(this::askForAction)
         super.onViewCreated(view, savedInstanceState)
 
         with((requireActivity() as AppCompatActivity)) {
@@ -81,6 +85,32 @@ class MessagesFragment :
 
     override fun deleteItem(message: Message) {
         (adapter as MessageAdapter).deleteItem(message)
+    }
+
+    @SuppressLint("InflateParams")
+    private fun askForAction(item: Message) {
+
+        val view = LayoutInflater.from(requireContext()).inflate(
+            R.layout.layout_message_actions,
+            null,
+            false
+        )
+
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(view)
+            .create()
+
+        view.btnDelete.setOnClickListener {
+            dialog.dismiss()
+            presenter.deleteMessage(item)
+        }
+        view.btnEdit.setOnClickListener {
+            dialog.dismiss()
+            presenter.updateMessage(item)
+        }
+
+        dialog.show()
     }
 
     companion object {

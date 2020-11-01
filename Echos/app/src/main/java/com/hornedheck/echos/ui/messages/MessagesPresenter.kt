@@ -36,6 +36,14 @@ class MessagesPresenter @Inject constructor(
         }
     }
 
+    fun deleteMessage(message: Message) {
+        interactor.deleteMessage(message, channelId).subscribe({}, viewState::showError)
+    }
+
+    fun updateMessage(message: Message) {
+        interactor.updateMessage(message, channelId).subscribe({}, viewState::showError)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         disposable.dispose()
