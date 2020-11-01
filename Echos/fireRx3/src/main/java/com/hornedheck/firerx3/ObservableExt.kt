@@ -3,6 +3,7 @@ package com.hornedheck.firerx3
 import com.google.firebase.database.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
+import timber.log.Timber
 import kotlin.reflect.KClass
 
 fun <T : Any> DatabaseReference.getObservableValues(cls: KClass<T>): Observable<T> =
@@ -40,16 +41,30 @@ fun <T : Any> DatabaseReference.getObservableValuesWithKey(cls: KClass<T>): Obse
         })
     }
 
-fun <T : Any> DatabaseReference.observe(cls: KClass<T>): Observable<T> {
-    val subject = PublishSubject.create<T>()
+fun <T : Any> DatabaseReference.observe(cls: KClass<T>): Observable<ChildAction<T>> {
+    val subject = PublishSubject.create<ChildAction<T>>()
     val listener = object : ChildEventListener {
 
-        override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) =
-            snapshot.getValue(cls.java).let(subject::onNext)
+        override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            Timber.d("Data added: $snapshot")
+            snapshot.getValue(cls.java)?.let {
+                subject.onNext(ChildAdd(it))
+            }
+        }
 
-        override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+        override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+            Timber.d("Data changed: $snapshot")
+            snapshot.getValue(cls.java)?.let {
+                subject.onNext(ChildUpdate(it))
+            }
+        }
 
-        override fun onChildRemoved(snapshot: DataSnapshot) {}
+        override fun onChildRemoved(snapshot: DataSnapshot) {
+            Timber.d("Data removed: $snapshot")
+            snapshot.getValue(cls.java)?.let {
+                subject.onNext(ChildDelete(it))
+            }
+        }
 
         override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
 

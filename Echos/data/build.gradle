@@ -30,6 +30,7 @@ dependencies {
     implementation project(path: ':fireRx3')
     implementation project(path: ':domain')
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.10'
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
 //  KTX & Support
     implementation 'androidx.core:core-ktx:1.3.2'

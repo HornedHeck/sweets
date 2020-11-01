@@ -75,6 +75,14 @@ class MessagesFragment :
         }
     }
 
+    override fun updateItem(message: Message) {
+        (adapter as MessageAdapter).updateItem(message)
+    }
+
+    override fun deleteItem(message: Message) {
+        (adapter as MessageAdapter).deleteItem(message)
+    }
+
     companion object {
 
         private const val CHANNEL_ID_KEY = "channel_id"

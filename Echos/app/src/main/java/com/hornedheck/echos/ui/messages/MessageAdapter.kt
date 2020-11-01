@@ -16,13 +16,28 @@ class MessageAdapter : BaseAdapter<Message, MessageViewHolder>() {
         }
     }
 
+    fun deleteItem(item: Message) {
+        val pos = items.indexOf(item)
+        if (pos !in items.indices) return
+        items.removeAt(pos)
+        notifyItemRemoved(pos)
+    }
+
+    fun updateItem(item: Message) {
+        val pos = items.indexOf(item)
+        if (pos !in items.indices) return
+        items[pos] = item
+        notifyItemChanged(pos)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             when (viewType) {
                 MESSAGE_IN -> R.layout.item_message_in
                 else -> R.layout.item_message_out
             },
-            parent, false)
+            parent, false
+        )
 
         return MessageViewHolder(view)
     }

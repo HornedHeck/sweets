@@ -4,6 +4,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.hornedheck.echos.data.models.ChannelInfoEntity
 import com.hornedheck.echos.data.models.MessageEntity
+import com.hornedheck.firerx3.ChildAdd
 import com.hornedheck.firerx3.getObservableValues
 import com.hornedheck.firerx3.getSingleValue
 import com.hornedheck.firerx3.observe
@@ -36,6 +37,8 @@ internal class ChannelsApiImpl : ChannelsApi {
 
     override fun observeChannels(id: String): Observable<String> =
         db.child(USERS).child(id).child(CHANNELS).observe(String::class)
+            .filter { it is ChildAdd<String> }
+            .map { it.data }
 
 //    override fun checkChannel(user1: String, user2: String): Single<Boolean> =
 //        toUserId(user2).flatMap { id ->
