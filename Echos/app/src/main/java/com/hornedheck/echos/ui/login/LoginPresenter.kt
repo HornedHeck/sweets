@@ -17,12 +17,7 @@ class LoginPresenter @Inject constructor(
     private val repo: UserRepo,
 ) : BasePresenter<LoginView>() {
 
-    init {
-        startLogin()
-    }
-
     fun startLogin() = viewState.startLogin()
-
 
     fun onLoginResult(resultCode: Int, response: IdpResponse?) {
         if (resultCode != Activity.RESULT_OK) {

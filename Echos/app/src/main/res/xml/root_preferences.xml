@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="day"
+        android:entries="@array/reply_entries"
+        android:entryValues="@array/reply_values"
+        android:key="theme"
+        android:title="@string/settings_theme"
+        app:useSimpleSummaryProvider="true" />
+</PreferenceScreen>

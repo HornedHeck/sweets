@@ -5,10 +5,7 @@ import com.firebase.ui.auth.AuthUI
 import com.hornedheck.echos.R
 import com.hornedheck.echos.base.BasePresenter
 import com.hornedheck.echos.domain.repo.UserRepo
-import com.hornedheck.echos.navigation.ContactsScreen
-import com.hornedheck.echos.navigation.GlobalNavigation
-import com.hornedheck.echos.navigation.LocalNavigation
-import com.hornedheck.echos.navigation.LoginScreen
+import com.hornedheck.echos.navigation.*
 import javax.inject.Inject
 
 class NavigationPresenter @Inject constructor(
@@ -23,6 +20,16 @@ class NavigationPresenter @Inject constructor(
         userRepo.getUser().subscribe(viewState::setUserInfo, viewState::showError)
     }
 
+    fun initialNavigation(context: Context) {
+        navigate(
+            if (lastNav == 0) {
+                R.id.menu_contacts
+            } else {
+                lastNav
+            }, context
+        )
+    }
+
     fun navigate(to: Int, context: Context): Boolean {
         if (to == lastNav) return true
         return when (to) {
@@ -32,8 +39,9 @@ class NavigationPresenter @Inject constructor(
                 true
             }
             R.id.menu_settings -> {
-                viewState.showError("Not implemented", "Not implemented")
-                false
+                navigation.router.replaceScreen(SettingsScreen())
+                lastNav = to
+                true
             }
             R.id.menu_logout -> {
                 AuthUI.getInstance().signOut(context)

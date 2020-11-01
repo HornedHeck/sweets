@@ -1,6 +1,9 @@
 package com.hornedheck.echos.ui.login
 
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.PreferenceManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.hornedheck.echos.R
@@ -49,6 +52,26 @@ class LoginActivity : BaseActivity(), LoginView {
                 .build(),
             RC_SIGN_IN
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .getString("theme", "day")
+            ?.let {
+                when (it) {
+                    "day" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                    "night" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }
+                    "time" -> {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME)
+                    }
+                }
+            }
+        presenter.startLogin()
     }
 
     override fun onResume() {

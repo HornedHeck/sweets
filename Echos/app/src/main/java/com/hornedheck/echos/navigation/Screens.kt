@@ -8,6 +8,7 @@ import com.hornedheck.echos.ui.login.LoginActivity
 import com.hornedheck.echos.ui.main.MainActivity
 import com.hornedheck.echos.ui.messages.MessagesFragment
 import com.hornedheck.echos.ui.navigation.NavigationFragment
+import com.hornedheck.echos.ui.settings.SettingsFragment
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
 class ContactsScreen : SupportAppScreen() {
@@ -40,5 +41,11 @@ class NavigationHostScreen : SupportAppScreen() {
 class MainScreen : SupportAppScreen() {
     override fun getActivityIntent(context: Context): Intent? {
         return Intent(context, MainActivity::class.java)
+    }
+}
+
+class SettingsScreen : SupportAppScreen() {
+    override fun getFragment(): Fragment? {
+        return SettingsFragment()
     }
 }

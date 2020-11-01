@@ -74,7 +74,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation), Navigatio
             }
         }
         navView.setCheckedItem(R.id.menu_contacts)
-        presenter.navigate(R.id.menu_contacts, requireContext())
+        presenter.initialNavigation(requireContext())
     }
 
     override fun setUserInfo(user: User) {
