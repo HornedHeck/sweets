@@ -5,7 +5,7 @@ import java.time.Instant
 data class Message(
     val id: String,
     val isIncoming: Boolean,
-    val content: String,
+    var content: String,
     val time: Instant,
 ) {
 

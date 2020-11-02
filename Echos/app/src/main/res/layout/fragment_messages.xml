@@ -43,17 +43,58 @@
         android:inputType="textMultiLine"
         android:maxLines="4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSend"
+        app:layout_constraintEnd_toStartOf="@+id/flButtons"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="Autofill" />
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="48dp"
+    <FrameLayout
+        android:id="@+id/flButtons"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=">"
+        android:animateLayoutChanges="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etContent" />
+        app:layout_constraintTop_toTopOf="@+id/etContent">
+
+        <ImageView
+            android:id="@+id/btnSend"
+            style="@style/MessagesButton"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_send"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etContent"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:id="@+id/llEditButtons"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnClear"
+                style="@style/MessagesButton"
+                android:src="@drawable/ic_clear"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etContent"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                style="@style/MessagesButton"
+                android:src="@drawable/ic_apply"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etContent"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

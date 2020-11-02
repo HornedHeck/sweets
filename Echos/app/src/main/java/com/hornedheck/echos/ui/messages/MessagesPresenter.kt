@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class MessagesPresenter @Inject constructor(
     private val interactor: MessageInteractor,
-    private val navigation: GlobalNavigation
+    private val navigation: GlobalNavigation,
 ) : BasePresenter<MessagesView>() {
 
     private val disposable = CompositeDisposable()
@@ -40,8 +40,22 @@ class MessagesPresenter @Inject constructor(
         interactor.deleteMessage(message, channelId).subscribe({}, viewState::showError)
     }
 
+    fun prepareUpdate(message: Message) {
+        viewState.showEditControls()
+        viewState.editMessage(message)
+    }
+
+    fun cancelUpdate() {
+        viewState.showSendControls()
+    }
+
     fun updateMessage(message: Message) {
-        interactor.updateMessage(message, channelId).subscribe({}, viewState::showError)
+        if (message.content.isBlank()) {
+            interactor.deleteMessage(message, channelId).subscribe({}, viewState::showError)
+        } else {
+            interactor.updateMessage(message, channelId).subscribe({}, viewState::showError)
+        }
+        viewState.showSendControls()
     }
 
     override fun onDestroy() {

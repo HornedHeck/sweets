@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hornedheck.echos.R
@@ -77,6 +78,9 @@ class MessagesFragment :
             presenter.sendMessage(etContent.text.toString())
             etContent.setText("")
         }
+        btnClear.setOnClickListener {
+            presenter.cancelUpdate()
+        }
     }
 
     override fun updateItem(message: Message) {
@@ -107,7 +111,7 @@ class MessagesFragment :
         }
         view.btnEdit.setOnClickListener {
             dialog.dismiss()
-            presenter.updateMessage(item)
+            presenter.prepareUpdate(item)
         }
 
         dialog.show()
@@ -122,5 +126,35 @@ class MessagesFragment :
                 arguments = bundleOf(CHANNEL_ID_KEY to channelId)
             }
     }
+
+    private var isSend = true
+
+    override fun showSendControls() {
+        if (!isSend) {
+            etContent.text.clear()
+            llEditButtons.isVisible = false
+            btnSend.isVisible = true
+            isSend = true
+        }
+    }
+
+    override fun showEditControls() {
+        if (isSend) {
+            etContent.text.clear()
+            btnSend.isVisible = false
+            llEditButtons.isVisible = true
+            isSend = false
+        }
+    }
+
+    override fun editMessage(message: Message) {
+        etContent.setText(message.content)
+        btnEdit.setOnClickListener {
+            message.content = etContent.text.toString()
+            presenter.updateMessage(message)
+            btnEdit.setOnClickListener(null)
+        }
+    }
+
 
 }
