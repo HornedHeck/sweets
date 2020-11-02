@@ -12,7 +12,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class DataModule {
+open class DataModule {
 
     @Provides
     @Singleton
@@ -20,7 +20,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesMessagesRepository(api: ChannelsApi): ChannelsRepo = ChanelsRepoImpl(api)
+    open fun providesChannelsRepo(api: ChannelsApi): ChannelsRepo = ChanelsRepoImpl(api)
 
     @Provides
     @Singleton
@@ -28,7 +28,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesUserRepo(api: UserApi): UserRepo = UserRepoImpl(api)
+    open fun providesUserRepo(api: UserApi): UserRepo = UserRepoImpl(api)
 
     @Provides
     @Singleton
@@ -36,6 +36,6 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesMessageRepo(api: MessageApi): MessageRepo = MessageRepoImpl(api)
+    open fun providesMessageRepo(api: MessageApi): MessageRepo = MessageRepoImpl(api)
 
 }

@@ -21,7 +21,7 @@ android {
         buildConfigField "int" , "NOTIFICATION_ID" , "24111"
         buildConfigField "String" , "WORK_TAG" , '"echos_work"'
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.hornedheck.echos.utils.MockDaggerRunner"
     }
 
     buildTypes {
@@ -97,4 +97,5 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'com.agoda.kakao:kakao:2.4.0'
 }

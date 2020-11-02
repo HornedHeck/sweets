@@ -8,7 +8,7 @@ import com.hornedheck.echos.utils.EchosWorkFactory
 import timber.log.Timber
 import javax.inject.Inject
 
-class EchosApp : Application(), Configuration.Provider {
+open class EchosApp : Application(), Configuration.Provider {
 
     internal lateinit var appComponent: AppComponent
         private set
@@ -19,7 +19,7 @@ class EchosApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        appComponent = DaggerAppComponent.create()
+        appComponent = buildAppComponent()
         appComponent.inject(this)
     }
 
@@ -27,5 +27,7 @@ class EchosApp : Application(), Configuration.Provider {
         Configuration.Builder()
             .setWorkerFactory(myWorkerFactory)
             .build()
+
+    protected open fun buildAppComponent(): AppComponent = DaggerAppComponent.create()
 
 }
